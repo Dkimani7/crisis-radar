@@ -1053,5 +1053,17 @@ button.prc:hover{filter:brightness(1.15)}
 }
 
 .sections button:focus-visible,.briefbtn:focus-visible,.wire a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.sections{scroll-padding-inline:16px}
+.sections:after{content:"";position:sticky;right:0;flex:0 0 18px;margin-left:-18px;background:linear-gradient(90deg,transparent,#fbfaf7)}
+
+.sections{padding-right:28px}
+.ticker{position:relative;z-index:1}
+.navr{position:relative;z-index:2}
+@media (max-width:760px){
+ .briefbtn{position:static;width:100%}
+ .ticker{margin-top:0}
+ .sit article h2{font-size:20px}
+}
 </style>
 </head>

@@ -1053,6 +1053,18 @@ button.prc:hover{filter:brightness(1.15)}
 }
 
 .sections button:focus-visible,.briefbtn:focus-visible,.wire a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.sections{scroll-padding-inline:16px}
+.sections:after{content:"";position:sticky;right:0;flex:0 0 18px;margin-left:-18px;background:linear-gradient(90deg,transparent,#fbfaf7)}
+
+.sections{padding-right:28px}
+.ticker{position:relative;z-index:1}
+.navr{position:relative;z-index:2}
+@media (max-width:760px){
+ .briefbtn{position:static;width:100%}
+ .ticker{margin-top:0}
+ .sit article h2{font-size:20px}
+}
 </style>
 </head>
 <body>
@@ -1373,14 +1385,14 @@ const ELECT=[
  {d:'2024, still live',n:'Romania',t:'Bucharest annulled a presidential election after investigators tied a far-right candidate’s social-media surge to a Russian influence operation. The same playbook, including cloned news sites, is being reported against the US midterms.'}
 ];
 const WIRES=[
- {lane:'geo',d:'6 Oct 2026',h:'Chevron: fuel buffers thinner as the Iran war enters month eight',b:'Mike Wirth told the Energy Intelligence Forum in London that the energy system is more fragile than earlier in the war, and that landed crude in Asia is closer to $150 than the $100 Brent futures price. The G7 has agreed a 100 million barrel crude and diesel release.',s:'Reuters',u:'https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/'},
- {lane:'geo',d:'9 Sep 2026',h:'Hormuz shipping strikes push Brent back through $100',b:'Iran said it attacked 10 ships near the Strait of Hormuz. The US sank five Iranian tankers. Brent settled at $101.21, the highest close since 22 May.',s:'Reuters',u:'https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/'},
- {lane:'geo',d:'17 Sep 2026',h:'JPMorgan: no oil-market endgame as the Iran war drags',b:'The bank said about 10 million barrels a day are already disrupted, US diesel hit $6.31 a gallon, and it cannot model how the war ends.',s:'Reuters',u:'https://www.reuters.com/business/energy/jp-morgan-says-it-has-no-clear-oil-market-endgame-iran-conflict-drags-2026-09-17/'},
- {lane:'geo',d:'26 Sep 2026',h:'Ukraine: front barely moves, winter strike campaign does',b:'ISW says Russian net gains since March are near zero. Ukrainian counterattacks continue in the Kupyansk, Oleksandrivka and Lyman directions. Russia launched 173 drones overnight on 25–26 September.',s:'ISW',u:'https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/'},
- {lane:'ai',d:'6 Oct 2026',h:'AI tools used in hacks on South Korean banks, president says',b:'Lee Jae Myung said signs of AI use have emerged in attacks on banks. Shinhan, KB Kookmin, Hana, BNK Busan, two savings banks and Hyundai Capital have reported leaks. About 66,000 people and 2,200 corporate records. Investigators point to Artex, an open-source AI vulnerability tool. The Shinhan breach came through a loan-broker portal, not the core payment network. No funds stolen.',s:'Reuters / Financial Times',u:'https://www.reuters.com/world/south-koreas-lee-says-ai-appears-have-been-used-bank-hacks-2026-10-06/'},
- {lane:'ai',d:'2 Oct 2026',h:'Japanese banks finding twice the vulnerabilities after Mythos',b:'Nikkei reported that vulnerability finds at major Japanese banks have roughly doubled since Anthropic released Claude Mythos. Lenders are being told to plan for suspending services. Palo Alto said the model found 75 flaws in a month across its own products and produced a working exploit more than 70% of the time.',s:'Nikkei Asia',u:'https://asia.nikkei.com/spotlight/cybersecurity/japan-banks-uncover-twice-the-vulnerabilities-following-mythos-ai-release'},
- {lane:'fraud',d:'25 Sep 2026',h:'Intesa’s Fideuram lost €95 million to an AI voice clone',b:'Then-chairman Paolo Molesini received a WhatsApp message that looked like it came from chief executive Carlo Messina, then a call using an AI clone of a senior lawyer. Transfers went mainly to China and Hong Kong. About €53 million was recovered. About €36 million is still missing, routed into crypto. First reported by Corriere della Sera. The bank declined to comment.',s:'Reuters',u:'https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/'},
- {lane:'fraud',d:'14 Sep 2026',h:'Revolut handed customer files to attackers posing as a government agency',b:'The fintech said it shared personal and financial data, including passports, with a party impersonating an Italian government agency. SecurityWeek put the contact at about five months, 680 high-profile accounts and a $3 million ransom demand.',s:'BleepingComputer',u:'https://www.bleepingcomputer.com/tag/banking/'}
+ {lane:'geo',d:'6 Oct 2026',h:'Chevron: fuel buffers thinner as the Iran war enters month eight',why:'Funding and liquidity desks feel this in USD and refined-product prices before it shows up in a supervisory speech.',b:'Mike Wirth told the Energy Intelligence Forum in London that the energy system is more fragile than earlier in the war, and that landed crude in Asia is closer to $150 than the $100 Brent futures price. The G7 has agreed a 100 million barrel crude and diesel release.',s:'Reuters',u:'https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/'},
+ {lane:'geo',d:'9 Sep 2026',h:'Hormuz shipping strikes push Brent back through $100',why:'A shipping strike is an energy-price shock and a sanctions-screening event on the same day.',b:'Iran said it attacked 10 ships near the Strait of Hormuz. The US sank five Iranian tankers. Brent settled at $101.21, the highest close since 22 May.',s:'Reuters',u:'https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/'},
+ {lane:'geo',d:'17 Sep 2026',h:'JPMorgan: no oil-market endgame as the Iran war drags',why:'No house baseline means scenario sets should stay open, not locked to one ceasefire date.',b:'The bank said about 10 million barrels a day are already disrupted, US diesel hit $6.31 a gallon, and it cannot model how the war ends.',s:'Reuters',u:'https://www.reuters.com/business/energy/jp-morgan-says-it-has-no-clear-oil-market-endgame-iran-conflict-drags-2026-09-17/'},
+ {lane:'geo',d:'26 Sep 2026',h:'Ukraine: front barely moves, winter strike campaign does',why:'The credit channel is energy, cyber and sanctions, not a map of villages.',b:'ISW says Russian net gains since March are near zero. Ukrainian counterattacks continue in the Kupyansk, Oleksandrivka and Lyman directions. Russia launched 173 drones overnight on 25–26 September.',s:'ISW',u:'https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/'},
+ {lane:'ai',d:'6 Oct 2026',h:'AI tools used in hacks on South Korean banks, president says',why:'The entry was a broker portal, not the core ledger. Third-party identity checks are the exposure.',b:'Lee Jae Myung said signs of AI use have emerged in attacks on banks. Shinhan, KB Kookmin, Hana, BNK Busan, two savings banks and Hyundai Capital have reported leaks. About 66,000 people and 2,200 corporate records. Investigators point to Artex, an open-source AI vulnerability tool. The Shinhan breach came through a loan-broker portal, not the core payment network. No funds stolen.',s:'Reuters / Financial Times',u:'https://www.reuters.com/world/south-koreas-lee-says-ai-appears-have-been-used-bank-hacks-2026-10-06/'},
+ {lane:'ai',d:'2 Oct 2026',h:'Japanese banks finding twice the vulnerabilities after Mythos',why:'A model that writes exploits changes the patch clock from months to days.',b:'Nikkei reported that vulnerability finds at major Japanese banks have roughly doubled since Anthropic released Claude Mythos. Lenders are being told to plan for suspending services. Palo Alto said the model found 75 flaws in a month across its own products and produced a working exploit more than 70% of the time.',s:'Nikkei Asia',u:'https://asia.nikkei.com/spotlight/cybersecurity/japan-banks-uncover-twice-the-vulnerabilities-following-mythos-ai-release'},
+ {lane:'fraud',d:'25 Sep 2026',h:'Intesa’s Fideuram lost €95 million to an AI voice clone',why:'The control that failed was callback identity, not the firewall.',b:'Then-chairman Paolo Molesini received a WhatsApp message that looked like it came from chief executive Carlo Messina, then a call using an AI clone of a senior lawyer. Transfers went mainly to China and Hong Kong. About €53 million was recovered. About €36 million is still missing, routed into crypto. First reported by Corriere della Sera. The bank declined to comment.',s:'Reuters',u:'https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/'},
+ {lane:'fraud',d:'14 Sep 2026',h:'Revolut handed customer files to attackers posing as a government agency',why:'A fake official request is now a fraud pattern, not only a legal one.',b:'The fintech said it shared personal and financial data, including passports, with a party impersonating an Italian government agency. SecurityWeek put the contact at about five months, 680 high-profile accounts and a $3 million ransom demand.',s:'BleepingComputer',u:'https://www.bleepingcomputer.com/tag/banking/'}
 ];
 </script>
 <script>
@@ -1620,8 +1632,9 @@ function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" d
 function renderFront(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="sh"><h2>From the wires</h2></div><div class="wires">'+(WIRES||[]).slice(0,4).map(w=>wireCard(w)).join('')+'</div><div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
- const wires=WIRES.slice(0,4).map(w=>`<article class="wire"><div class="dt">${esc(w.d)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">${esc(w.s)} ↗</a></article>`).join('');
- $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:22px"><h2>From the wires</h2><span class="sub">News media · geopolitics, AI attacks, deepfake fraud</span><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="wires">${wires}</div><div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
+ const wires=WIRES.slice(0,4).map(wireCard).join('');
+ const briefs=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p></article>`).join('');
+ $('#main').innerHTML=`<div class="sh"><h2>Situation</h2><span class="sub">News media, not a supervisory paper</span><button class="more" data-act="view" data-v="geo">Full brief ${ic('arrow',13,2)}</button></div><div class="sit">${briefs}</div><div class="sh"><h2>From the wires</h2><span class="sub">Geopolitics, AI attacks, deepfake fraud</span></div><div class="wires">${wires}</div>`+jurBar()+renderExec()+`<div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
  <section class="lead story" data-id="${L.id}"><div>${kicker(L)}<h2 class="hl" data-act="read" data-id="${L.id}">${esc(L.h)}</h2><p class="brief">${esc(L.brief)}</p>${srcLine(L)}
   <div class="leadmeta" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">${critChip(L)}${adjLine(L)||reasonLine(L)}${relvTag(L)}${curBtns(L)}${inBrief(L)}</div>
   <div style="margin-top:16px"><button class="pbtn" data-act="read" data-id="${L.id}">Extraction &amp; citations ${ic('arrow',14,2)}</button></div></div>
@@ -1846,7 +1859,7 @@ function watchlist(){const c=client();$('#modal').innerHTML=`<div style="display
 
 /* ---------- render & actions ---------- */
 
-function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
+function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p>${w.why?`<p class="why"><b>For a bank. </b>${esc(w.why)}</p>`:''}</div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
 function renderGeo(){const wars=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
  $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Wars and elections as reported in the news, with a situation brief so a single headline has context. Not a supervisory publication.</p></div><div class="stat"><b>2</b> wars<br>in the brief</div></div>
  <div class="sit">${wars}</div>
@@ -1912,7 +1925,8 @@ $('#wlBtn').addEventListener('click',watchlist);
 $('#briefBtn').addEventListener('click',openTray);
 $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');$('#scrim').classList.remove('on')});
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
-$$('#sections button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.v)));
+$$('#sections button').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.v);history.replaceState(null,'','#'+b.dataset.v)}));
+ if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','fraud','themes','desk','calendar','map','priorities'].includes(v))S.view=v}
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
 try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
 </script>

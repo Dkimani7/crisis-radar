@@ -122,8 +122,9 @@ function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" d
 function renderFront(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="sh"><h2>From the wires</h2></div><div class="wires">'+(WIRES||[]).slice(0,4).map(w=>wireCard(w)).join('')+'</div><div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
- const wires=WIRES.slice(0,4).map(w=>`<article class="wire"><div class="dt">${esc(w.d)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">${esc(w.s)} ↗</a></article>`).join('');
- $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:22px"><h2>From the wires</h2><span class="sub">News media · geopolitics, AI attacks, deepfake fraud</span><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="wires">${wires}</div><div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
+ const wires=WIRES.slice(0,4).map(wireCard).join('');
+ const briefs=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p></article>`).join('');
+ $('#main').innerHTML=`<div class="sh"><h2>Situation</h2><span class="sub">News media, not a supervisory paper</span><button class="more" data-act="view" data-v="geo">Full brief ${ic('arrow',13,2)}</button></div><div class="sit">${briefs}</div><div class="sh"><h2>From the wires</h2><span class="sub">Geopolitics, AI attacks, deepfake fraud</span></div><div class="wires">${wires}</div>`+jurBar()+renderExec()+`<div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
  <section class="lead story" data-id="${L.id}"><div>${kicker(L)}<h2 class="hl" data-act="read" data-id="${L.id}">${esc(L.h)}</h2><p class="brief">${esc(L.brief)}</p>${srcLine(L)}
   <div class="leadmeta" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">${critChip(L)}${adjLine(L)||reasonLine(L)}${relvTag(L)}${curBtns(L)}${inBrief(L)}</div>
   <div style="margin-top:16px"><button class="pbtn" data-act="read" data-id="${L.id}">Extraction &amp; citations ${ic('arrow',14,2)}</button></div></div>
@@ -348,7 +349,7 @@ function watchlist(){const c=client();$('#modal').innerHTML=`<div style="display
 
 /* ---------- render & actions ---------- */
 
-function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
+function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p>${w.why?`<p class="why"><b>For a bank. </b>${esc(w.why)}</p>`:''}</div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
 function renderGeo(){const wars=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
  $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Wars and elections as reported in the news, with a situation brief so a single headline has context. Not a supervisory publication.</p></div><div class="stat"><b>2</b> wars<br>in the brief</div></div>
  <div class="sit">${wars}</div>
@@ -414,7 +415,8 @@ $('#wlBtn').addEventListener('click',watchlist);
 $('#briefBtn').addEventListener('click',openTray);
 $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');$('#scrim').classList.remove('on')});
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
-$$('#sections button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.v)));
+$$('#sections button').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.v);history.replaceState(null,'','#'+b.dataset.v)}));
+ if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','fraud','themes','desk','calendar','map','priorities'].includes(v))S.view=v}
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
 try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
 </script>
