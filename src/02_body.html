@@ -24,25 +24,9 @@
   <div class="navr"><button class="briefbtn" id="briefBtn"><span data-i="bookmark"></span>Monday’s Brief <span class="n num" id="briefN">0</span></button></div>
 </div></nav>
 </div>
-<script>
-function showPane(id){
-  var panes=document.querySelectorAll('.pane');
-  for(var i=0;i<panes.length;i++){panes[i].classList.remove('on');panes[i].style.display='none'}
-  var el=document.getElementById(id)||document.getElementById('front');
-  if(el){el.classList.add('on');el.style.display='block'}
-  var links=document.querySelectorAll('.sections a');
-  for(var j=0;j<links.length;j++) links[j].classList.toggle('on', links[j].getAttribute('data-v')===id);
-}
-document.addEventListener('click',function(e){
-  var a=e.target.closest&&e.target.closest('.sections a');
-  if(!a) return;
-  e.preventDefault();
-  showPane(a.getAttribute('data-v'));
-});
-showPane('front');
-</script>
+
 <main class="wrap page" id="main">
-<section class="pane" id="front">
+<section class="pane on" id="front">
 <section class="xsum"><h2>Executive summary</h2><p>Two wars set the price of energy and the sanctions map. A short list of elections can move both. AI risk is one block: models that find exploits, and models that impersonate a person. The only disclosed bank cash loss is Fideuram, €95 million sent, about €36 million still missing.</p></section>
 <div class="geoplay"><div>
 <div class="sh"><h2>The two wars</h2><a class="more" href="#geo">Geopolitics</a></div>
@@ -100,6 +84,25 @@ showPane('front');
 </div>
 </section>
 </main>
+<script>
+function showPane(id){
+  var panes=document.querySelectorAll('.pane');
+  for(var i=0;i<panes.length;i++){panes[i].classList.remove('on');panes[i].style.display='none'}
+  var el=document.getElementById(id)||document.getElementById('front');
+  if(el){el.classList.add('on');el.style.display='block'}
+  var links=document.querySelectorAll('.sections a');
+  for(var j=0;j<links.length;j++) links[j].classList.toggle('on', links[j].getAttribute('data-v')===id);
+}
+document.addEventListener('click',function(e){
+  var n=e.target;
+  while(n&&n.tagName!=='A') n=n.parentNode;
+  if(!n||!n.getAttribute||n.getAttribute('data-v')==null) return;
+  if(!n.closest&&!(n.parentNode&&n.parentNode.id==='sections')&&n.parentNode.id!=='sections') return;
+  e.preventDefault();
+  showPane(n.getAttribute('data-v'));
+});
+</script>
+
 <footer class="foot"><div class="wrap"><span><span id="footRadar">Crisis Radar</span> · <b id="footClient"></b> edition · <span id="footKind">Wars, elections, AI and fraud</span></span><span>Curated by <b>Northbridge Risk Advisory</b> · <span id="footDisc">Pitch · not affiliated with Banco Santander</span></span></div></footer>
 <div class="scrim" id="scrim"></div>
 <aside class="panel reader" id="reader"></aside>
