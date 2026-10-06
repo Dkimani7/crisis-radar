@@ -1030,6 +1030,29 @@ button.prc:hover{filter:brightness(1.15)}
 .wire p{margin:0;color:var(--ink2);font-size:14px}
 .wire a{font:600 12px var(--sans);color:var(--accent);white-space:nowrap}
 @media(max-width:800px){.sit{grid-template-columns:1fr}.wire{grid-template-columns:1fr}}
+
+@media (max-width:760px){
+ .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+ .mast{padding:14px 0 8px}
+ .title h1{font-size:clamp(34px,11vw,48px)}
+ .title .tag{font-size:12px;line-height:1.35}
+ .nav{top:0}
+ .nav .wrap{padding-bottom:0}
+ .sections{gap:0}
+ .sections button{min-height:44px;height:44px;padding:0 12px}
+ .navr{padding:0 0 8px}
+ .briefbtn{width:100%;justify-content:center;min-height:44px}
+ .ticker .lab{flex:0 0 auto}
+ .page{padding-bottom:max(48px,env(safe-area-inset-bottom))}
+ .lead h2,.story h3,.wire h3{overflow-wrap:anywhere}
+ .lead,.pcgrid,.calcols,.sit,.glance,.row{grid-template-columns:1fr!important}
+ .graphic,.rail{border-left:0;padding-left:0;margin-top:12px}
+ svg{max-width:100%;height:auto}
+ .foot .wrap{gap:8px}
+ body{overflow-x:hidden}
+}
+
+.sections button:focus-visible,.briefbtn:focus-visible,.wire a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -1267,21 +1290,21 @@ const PRIOS=[
   gsib:'A multi-currency balance sheet across Europe and the Americas means geopolitical scenarios hit capital, FX liquidity and asset quality at the same time. The reverse stress test showed management actions and FX liquidity are where supervisors push hardest, and G-SIB buffers make capital-planning credibility a peer-comparison topic.',
   vs:[
   {id:'p1a',code:'P1.1',short:'Credit standards',v:'Ensure prudent risk-taking and sound credit standards',th:'capital',hook:'the credit-underwriting thematic review is under way, findings still to come',
-   acts:['Thematic review of credit underwriting standards (new lending)','Targeted review of loan pricing (follow-up)','Targeted credit-risk OSIs on origination and underwriting'],ev:['E13','E10'],
+   acts:['Thematic review of credit underwriting standards (new lending)','Targeted review of loan pricing (follow-up)','Targeted credit-risk OSIs on origination and underwriting'],ev:['E10'],
    fu:{plan:{t:'Thematic review of underwriting standards for new lending; loan-pricing follow-up; credit-risk OSIs on origination',d:'2026–27',st:'progress',src:'E13'},
        data:{t:'Data collection on new-lending standards and pricing for the thematic review',d:'tbc',st:'upcoming',ill:1},
        find:{t:'No horizontal findings published yet',d:'—',st:'upcoming'},
        rem:{t:'Expected: underwriting within risk appetite, and pricing that reflects risk',d:'—',st:'upcoming',src:'E13'},
        next:{t:'Thematic-review feedback to banks',d:'tbc',st:'upcoming',ill:1}}},
   {id:'p1b',code:'P1.2',short:'Capital & CRR III',v:'Ensure adequate capitalisation and consistent implementation of CRR III',th:'capital',hook:'reverse-stress-test findings move into SREP follow-up',
-   acts:['Targeted reviews and OSIs on SA risk-weighted assets','Targeted reviews of the operational-risk business indicator component','2026 thematic reverse stress test (geopolitical)'],ev:['E13','E10','E09','E17'],
+   acts:['Targeted reviews and OSIs on SA risk-weighted assets','Targeted reviews of the operational-risk business indicator component','2026 thematic reverse stress test (geopolitical)'],ev:['E10','E09','E17'],
    fu:{plan:{t:'Targeted reviews and OSIs on standardised-approach RWAs and the op-risk business indicator (CRR III)',d:'2026–28',st:'progress',src:'E13'},
        data:{t:'2026 thematic reverse stress test: 110 directly supervised banks submitted their own geopolitical scenarios',iso:'2026-07-31',st:'done',src:'E10'},
        find:{t:'Solvency–liquidity interaction poorly captured; some FX LCRs below 100%; mitigating actions recover only about half of depleted capital',iso:'2026-07-31',st:'published',src:'E10'},
        rem:{t:'Bank-specific follow-up to improve stress-testing frameworks; results feed the qualitative SREP assessment',d:'2026–27',st:'progress',src:'E10'},
        next:{t:'SREP 2026 decisions communicated to banks (usual annual cycle)',d:'Q4 2026 – Q1 2027',st:'upcoming',ill:1}}},
   {id:'p1c',code:'P1.3',short:'Climate & nature',v:'Ensure prudent management of climate and nature-related risks',th:'esg',hook:'enforcement shows climate deadlines are policed',
-   acts:['Follow-up of remediation from the 2022 thematic review and climate stress test','Thematic review of transition planning (CRD VI)','Horizontal assessment of Pillar 3 ESG disclosures','Deep dive into physical-risk capabilities','Targeted C&N OSIs'],ev:['E13','E11','E12','E18'],
+   acts:['Follow-up of remediation from the 2022 thematic review and climate stress test','Thematic review of transition planning (CRD VI)','Horizontal assessment of Pillar 3 ESG disclosures','Deep dive into physical-risk capabilities','Targeted C&N OSIs'],ev:[],
    fu:{plan:{t:'Remediation follow-up (2022 thematic review); transition-planning thematic review (CRD VI); Pillar 3 ESG assessment; physical-risk deep dive',d:'2026–28',st:'progress',src:'E13'},
        data:{t:'EBA ESG supervisory-reporting ITS: consultation closed 10 Jul 2026, final ITS pending; phase 2 from 09/2027 (tentative)',d:'Closed 10 Jul 2026',st:'progress',src:'E18'},
        find:{t:'Climate-risk materiality assessment not completed by the ECB deadline (31 May 2024) at some banks',d:'2025–26',st:'published',src:'E11'},
@@ -1291,21 +1314,21 @@ const PRIOS=[
   gsib:'Critical functions run on shared group ICT and third-party platforms across many jurisdictions. G-SIB status raises the bar on recovery-time evidence, TLPT, concentration on cloud providers and RDARR, which is a BCBS 239 baseline for G-SIBs.',
   vs:[
   {id:'p2a',code:'P2.1',short:'Cyber, ICT & third parties',v:'Implement robust and resilient operational risk management frameworks',th:'dora',hook:'frontier-AI cyber action plans are due 31 Oct',
-   acts:['Follow-up on banks reporting material ICT security / outsourcing shortcomings','Two OSI campaigns: cybersecurity management and third-party risk management (DORA)','Threat-led penetration testing (TLPT)','Targeted review of ICT change management','Deep dive into cloud-provider dependency'],ev:['E13','E14','E15','B01'],
+   acts:['Follow-up on banks reporting material ICT security / outsourcing shortcomings','Two OSI campaigns: cybersecurity management and third-party risk management (DORA)','Threat-led penetration testing (TLPT)','Targeted review of ICT change management','Deep dive into cloud-provider dependency'],ev:['E14'],
    fu:{plan:{t:'Two OSI campaigns (cybersecurity; third-party risk under DORA), TLPT, ICT change-management review, cloud-dependency deep dive',d:'2026–27',st:'progress',src:'E13'},
        data:{t:'ECB request to significant institutions: assess the frontier-AI cyber threat and build a comprehensive action plan',d:'Requested 2026',st:'progress',src:'E14'},
        find:{t:'Material shortcomings from past cybersecurity and third-party risk reviews still to be remediated',d:'Nov 2025',st:'published',src:'E13'},
        rem:{t:'Action plan with concrete measures; review of critical non-ICT third-party arrangements within two years (EBA GL)',d:'2026–28',st:'upcoming',src:'E15'},
        next:{t:'Frontier-AI cyber action plans due to the ECB',iso:'2026-10-31',st:'upcoming',src:'E14'}}},
   {id:'p2b',code:'P2.2',short:'Risk data (RDARR)',v:'Remedy deficiencies in risk reporting capabilities and related information systems (RDARR)',th:'ai',hook:'the escalation ladder applies where RDARR remediation lags',
-   acts:['System-wide RDARR strategy with remediation and escalation process','Targeted RDARR OSIs, including on previously identified severe findings'],ev:['E13','E02'],
+   acts:['System-wide RDARR strategy with remediation and escalation process','Targeted RDARR OSIs, including on previously identified severe findings'],ev:[],
    fu:{plan:{t:'System-wide RDARR strategy with remediation and escalation; targeted OSIs, including on previously identified severe findings',d:'2026–28',st:'progress',src:'E13'},
        data:{t:'Tracking of bank remediation plans against the escalation process',d:'Ongoing',st:'progress',ill:1},
        find:{t:'Long-standing RDARR deficiencies and previously identified severe findings',d:'Nov 2025',st:'published',src:'E13'},
        rem:{t:'Timely remediation; escalation up to periodic penalty payments where it lags',d:'Sep 2026',st:'progress',src:'E02'},
        next:{t:'Targeted RDARR OSIs',d:'tbc',st:'upcoming'}}},
   {id:'p2c',code:'P2.3',short:'Digital & AI',v:'Medium-to-long-term: digital and AI strategies, governance and risk management',th:'ai',hook:'AI remains at narrative stage, with no findings yet',
-   acts:['Targeted horizontal workshops on generative-AI applications','Cooperation with AI Act market-surveillance authorities and the EBA'],ev:['E13','E05','E04'],
+   acts:['Targeted horizontal workshops on generative-AI applications','Cooperation with AI Act market-surveillance authorities and the EBA'],ev:['E04'],
    fu:{plan:{t:'Horizontal workshops on generative-AI applications; cooperation with AI Act authorities and the EBA',d:'2026–28',st:'progress',src:'E13'},
        data:{t:'Inventory of AI use cases ahead of the workshops',d:'tbc',st:'upcoming',ill:1},
        find:{t:'No findings published yet: narrative stage (Buch 22 Sep, Lagarde 1 Oct)',d:'—',st:'upcoming',src:'E05'},
@@ -1595,7 +1618,7 @@ function renderNavCount(){$('#briefN').textContent=finalOrder().length}
 /* ---------- FRONT ---------- */
 function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" data-id="${i.id}"><div class="sbody">${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p>${srcLine(i)}</div><div class="sfoot">${critChip(i)}${relvTag(i)}<span style="margin-left:auto;display:flex;gap:6px;align-items:center">${inBrief(i)}${curBtns(i)}</span></div></article>`}
 function renderFront(){const c=C(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
- const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="empty">No publications in scope.</div>';return}
+ const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="sh"><h2>From the wires</h2></div><div class="wires">'+(WIRES||[]).slice(0,4).map(w=>wireCard(w)).join('')+'</div><div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
  const wires=WIRES.slice(0,4).map(w=>`<article class="wire"><div class="dt">${esc(w.d)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">${esc(w.s)} ↗</a></article>`).join('');
  $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:22px"><h2>From the wires</h2><span class="sub">News media · geopolitics, AI attacks, deepfake fraud</span><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="wires">${wires}</div><div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
@@ -1824,14 +1847,14 @@ function watchlist(){const c=C();$('#modal').innerHTML=`<div style="display:flex
 /* ---------- render & actions ---------- */
 
 function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
-function renderGeo(){const wars=SITUATIONS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
+function renderGeo(){const wars=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
  $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Wars and elections as reported in the news, with a situation brief so a single headline has context. Not a supervisory publication.</p></div><div class="stat"><b>2</b> wars<br>in the brief</div></div>
  <div class="sit">${wars}</div>
  <div class="sh"><h2>Elections</h2><span class="sub">Country votes that can move sanctions, energy policy and bank funding</span></div>
  <div class="wires">${ELECT.map(e=>`<article class="wire"><div class="dt">${esc(e.d)}</div><div><h3>${esc(e.n)}</h3><p>${esc(e.t)}</p></div></article>`).join('')}</div>
- <div class="sh"><h2>From the wires</h2></div><div class="wires">${WIRES.filter(w=>w.lane==='geo').map(wireCard).join('')}</div>`}
-function renderAi(){$('#main').innerHTML=`<div class="sechead"><div><h1>AI incidents at banks</h1><p>News of attacks and tools hitting banks. Mythos is the capability shift. Korea is the live campaign.</p></div><div class="stat"><b>${WIRES.filter(w=>w.lane==='ai').length}</b> stories</div></div><div class="wires">${WIRES.filter(w=>w.lane==='ai').map(wireCard).join('')}</div>`}
-function renderFraud(){$('#main').innerHTML=`<div class="sechead"><div><h1>Fraud at banks</h1><p>Major losses, with deepfakes called out. These are news reports of money or files leaving a bank, not supervisory speeches.</p></div><div class="stat"><b>€95m</b> Fideuram<br>still partly missing</div></div><div class="wires">${WIRES.filter(w=>w.lane==='fraud').map(wireCard).join('')}</div>`}
+ <div class="sh"><h2>From the wires</h2></div><div class="wires">${(WIRES||[]).filter(w=>w.lane==='geo').map(wireCard).join('')}</div>`}
+function renderAi(){$('#main').innerHTML=`<div class="sechead"><div><h1>AI incidents at banks</h1><p>News of attacks and tools hitting banks. Mythos is the capability shift. Korea is the live campaign.</p></div><div class="stat"><b>${(WIRES||[]).filter(w=>w.lane==='ai').length}</b> stories</div></div><div class="wires">${(WIRES||[]).filter(w=>w.lane==='ai').map(wireCard).join('')}</div>`}
+function renderFraud(){$('#main').innerHTML=`<div class="sechead"><div><h1>Fraud at banks</h1><p>Major losses, with deepfakes called out. These are news reports of money or files leaving a bank, not supervisory speeches.</p></div><div class="stat"><b>€95m</b> Fideuram<br>still partly missing</div></div><div class="wires">${(WIRES||[]).filter(w=>w.lane==='fraud').map(wireCard).join('')}</div>`}
 function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,fraud:renderFraud,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
 function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
@@ -1891,7 +1914,7 @@ $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.rem
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
 $$('#sections button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.v)));
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
-renderAll();window.__ready=true;
+try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
 </script>
 <script>
 /* ================= PDF (jsPDF, embedded fonts, selectable text) ================= */
