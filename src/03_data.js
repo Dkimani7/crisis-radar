@@ -260,29 +260,39 @@ const PIPE=[
  {j:'ea',inst:'CMDI reform (Dir. 2026/806, Reg. 2026/808, Dir. 2026/804)',th:'liq',stages:{cons:'done',reply:'closed',fin:'OJ April 2026',impl:'Transposition (tbc)'},cur:'impl',src:'E06'}
 ];
 
-/* ============ CRISIS WIRES · news media, not supervisory papers ============ */
-const SITUATIONS=[
- {id:'iran',n:'United States–Iran war',asof:'6 October 2026',
-  sum:'The war is in its eighth month. It is no longer a short supply shock. Shipping through the Strait of Hormuz, which carried about a fifth of globally traded oil before the war, is the leverage point, and strikes on tankers keep testing ceasefires.',
-  now:'On 6 October Chevron’s chief executive said oil and fuel buffers are thinner than earlier in the war, and that physical crude landed in Asia is closer to $150 a barrel than the roughly $100 where Brent futures trade. The G7 agreed last week to release 100 million barrels of crude and diesel. On 9 September Iran attacked ships near Hormuz and the US sank five Iranian tankers, the largest shipping strikes since the war began. Brent settled at $101.21. JPMorgan said in mid-September it has no baseline for how the market ends, with about 10 million barrels a day already disrupted and US diesel at an all-time high of $6.31 a gallon.',
-  src:'Reuters, 6 Oct, 14 Sep and 9 Sep 2026'},
- {id:'ukr',n:'Russia–Ukraine war',asof:'late September 2026',
-  sum:'The war is a grinding front plus a winter strike campaign. Territory is not moving the way Moscow claims. The pressure is on energy, drones and sanctions.',
-  now:'The Institute for the Study of War assessed in late September that Russian net gains have been near zero since March 2026, while Ukrainian forces have counterattacked toward Kupyansk, Oleksandrivka and Lyman. ISW has recorded about 148 square kilometres seized by Russia this year and at least 973 liberated by Ukraine, against Russian claims of 5,300. Moscow is leaning on long-range drones against energy ahead of winter: 162 drones on 25 September and 173 overnight into 26 September. The US signed the Lindsey Graham Sanctioning Russia and Iran Act on 18 September. US and Ukrainian officials denied a report that President Trump had asked President Zelensky to travel to Moscow for talks.',
-  src:'ISW assessments, 19–26 Sep 2026'}
+
+/* ============ CRISIS CLARITY · one brief, not a wire ============ */
+const WARS=[
+ {id:'iran',n:'United States and Iran',asof:'6 October 2026',
+  elements:[
+   {k:'Where it stands',v:'Eighth month. This is no longer a short supply shock. The Strait of Hormuz is the leverage point.'},
+   {k:'What moved',v:'On 9 September Iran attacked ships near Hormuz and the US sank five Iranian tankers. Brent settled at $101. On 6 October Chevron said physical crude landed in Asia is closer to $150 than the futures price near $100.'},
+   {k:'What is at stake',v:'About a fifth of traded oil went through Hormuz before the war. The G7 agreed a 100 million barrel release. JPMorgan has no baseline for how it ends, with about 10 million barrels a day already disrupted.'},
+   {k:'For a bank',v:'USD funding, refined-product prices, and sanctions screening on shipping. Do not lock the scenario to one ceasefire date.'}
+  ]},
+ {id:'ukr',n:'Russia and Ukraine',asof:'late September 2026',
+  elements:[
+   {k:'Where it stands',v:'A stuck front and a winter strike campaign. Territory is not moving the way Moscow claims.'},
+   {k:'What moved',v:'The Institute for the Study of War says Russian net gains since March are near zero. Ukrainian counterattacks continue toward Kupyansk, Oleksandrivka and Lyman. Russia launched 173 drones overnight on 25–26 September.'},
+   {k:'What is at stake',v:'Energy infrastructure into winter, sanctions, and cyber. The US signed the Graham sanctions act on Russia and Iran on 18 September.'},
+   {k:'For a bank',v:'The credit channel is energy, cyber and sanctions, not a map of villages.'}
+  ]}
 ];
-const ELECT=[
- {d:'3 Nov 2026',n:'United States midterms',t:'The Iran war is the foreign-policy issue in the campaign. A Chicago Council survey out this week found 86% of adults say the war has been bad for the cost of living, 72% bad for America’s reputation, and 71% say tariffs are bad for the economy. Polling puts Republicans at a disadvantage. The Senate is still open.'},
- {d:'2024, still live',n:'Romania',t:'Bucharest annulled a presidential election after investigators tied a far-right candidate’s social-media surge to a Russian influence operation. The same playbook, including cloned news sites, is being reported against the US midterms.'}
+const ELECTIONS=[
+ {when:'25 October 2026',where:'Brazil',what:'Presidential runoff, if needed, after the 4 October first round. Also Bulgaria (president) and Serbia (parliament) the same day.'},
+ {when:'27 October 2026',where:'Israel',what:'Knesset election. Matters for the Iran war and energy risk, not as a European credit event.'},
+ {when:'3 November 2026',where:'United States',what:'Midterms. The Iran war is the foreign-policy issue. A Chicago Council survey this week found 86% say the war has been bad for the cost of living.'},
+ {when:'7 November 2026',where:'New Zealand',what:'Parliament. A developed-market vote, not a war vote.'},
+ {when:'29 November 2026',where:'Spain',what:'Parliament, on the elections calendar. A euro-area vote with no crisis trigger attached yet.'},
+ {when:'Reference, 2024',where:'Romania',what:'A presidential vote was annulled after a Russian influence operation. The pattern is the point, not a new ballot.'}
 ];
-const WIRES=[
- {lane:'geo',d:'6 Oct 2026',h:'Chevron: fuel buffers thinner as the Iran war enters month eight',why:'Funding and liquidity desks feel this in USD and refined-product prices before it shows up in a supervisory speech.',b:'Mike Wirth told the Energy Intelligence Forum in London that the energy system is more fragile than earlier in the war, and that landed crude in Asia is closer to $150 than the $100 Brent futures price. The G7 has agreed a 100 million barrel crude and diesel release.',s:'Reuters',u:'https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/'},
- {lane:'geo',d:'9 Sep 2026',h:'Hormuz shipping strikes push Brent back through $100',why:'A shipping strike is an energy-price shock and a sanctions-screening event on the same day.',b:'Iran said it attacked 10 ships near the Strait of Hormuz. The US sank five Iranian tankers. Brent settled at $101.21, the highest close since 22 May.',s:'Reuters',u:'https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/'},
- {lane:'geo',d:'17 Sep 2026',h:'JPMorgan: no oil-market endgame as the Iran war drags',why:'No house baseline means scenario sets should stay open, not locked to one ceasefire date.',b:'The bank said about 10 million barrels a day are already disrupted, US diesel hit $6.31 a gallon, and it cannot model how the war ends.',s:'Reuters',u:'https://www.reuters.com/business/energy/jp-morgan-says-it-has-no-clear-oil-market-endgame-iran-conflict-drags-2026-09-17/'},
- {lane:'geo',d:'26 Sep 2026',h:'Ukraine: front barely moves, winter strike campaign does',why:'The credit channel is energy, cyber and sanctions, not a map of villages.',b:'ISW says Russian net gains since March are near zero. Ukrainian counterattacks continue in the Kupyansk, Oleksandrivka and Lyman directions. Russia launched 173 drones overnight on 25–26 September.',s:'ISW',u:'https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/'},
- {lane:'ai',d:'6 Oct 2026',h:'AI tools used in hacks on South Korean banks, president says',why:'The entry was a broker portal, not the core ledger. Third-party identity checks are the exposure.',b:'Lee Jae Myung said signs of AI use have emerged in attacks on banks. Shinhan, KB Kookmin, Hana, BNK Busan, two savings banks and Hyundai Capital have reported leaks. About 66,000 people and 2,200 corporate records. Investigators point to Artex, an open-source AI vulnerability tool. The Shinhan breach came through a loan-broker portal, not the core payment network. No funds stolen.',s:'Reuters / Financial Times',u:'https://www.reuters.com/world/south-koreas-lee-says-ai-appears-have-been-used-bank-hacks-2026-10-06/'},
- {lane:'ai',d:'2 Oct 2026',h:'Japanese banks finding twice the vulnerabilities after Mythos',why:'A model that writes exploits changes the patch clock from months to days.',b:'Nikkei reported that vulnerability finds at major Japanese banks have roughly doubled since Anthropic released Claude Mythos. Lenders are being told to plan for suspending services. Palo Alto said the model found 75 flaws in a month across its own products and produced a working exploit more than 70% of the time.',s:'Nikkei Asia',u:'https://asia.nikkei.com/spotlight/cybersecurity/japan-banks-uncover-twice-the-vulnerabilities-following-mythos-ai-release'},
- {lane:'fraud',d:'25 Sep 2026',h:'Intesa’s Fideuram lost €95 million to an AI voice clone',why:'The control that failed was callback identity, not the firewall.',b:'Then-chairman Paolo Molesini received a WhatsApp message that looked like it came from chief executive Carlo Messina, then a call using an AI clone of a senior lawyer. Transfers went mainly to China and Hong Kong. About €53 million was recovered. About €36 million is still missing, routed into crypto. First reported by Corriere della Sera. The bank declined to comment.',s:'Reuters',u:'https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/'},
- {lane:'fraud',d:'14 Sep 2026',h:'Revolut handed customer files to attackers posing as a government agency',why:'A fake official request is now a fraud pattern, not only a legal one.',b:'The fintech said it shared personal and financial data, including passports, with a party impersonating an Italian government agency. SecurityWeek put the contact at about five months, 680 high-profile accounts and a $3 million ransom demand.',s:'BleepingComputer',u:'https://www.bleepingcomputer.com/tag/banking/'}
-];
+const AIBLOCK={
+ h:'AI, model risk and fraud',
+ sum:'One risk, two doors. A model that finds exploits, and a model that impersonates a person. Both skip a control that assumed a human attacker or a real caller.',
+ bullets:[
+  {t:'Deepfake fraud · Fideuram',d:'February, reported 25 September. A WhatsApp message looked like it came from Intesa Sanpaolo’s chief executive. A follow-up call used an AI clone of a lawyer’s voice. €95 million was sent, mostly to China and Hong Kong. About €53 million was recovered. About €36 million is still missing.'},
+  {t:'AI intrusion · South Korea',d:'28 September to 6 October. Seven financial firms, about 66,000 people, entered through a loan-broker portal rather than the core ledger. Investigators point to Artex, an open-source AI tool. No funds stolen. The president said AI was used.'},
+  {t:'Model capability · Mythos',d:'Anthropic’s Claude Mythos, April, released to selected partners. Nikkei on 2 October: Japanese banks are finding about twice as many flaws. Palo Alto found 75 in a month and a working exploit more than 70% of the time.'}
+ ]
+};
 </script>

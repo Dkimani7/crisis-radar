@@ -111,7 +111,16 @@ function buildPdf(fonts){
  if(e.cover&&e.cover.trim()){need(22);doc.setDrawColor(...INK);doc.setLineWidth(.25);doc.line(M,L.y,W-M,L.y);adv(3.5);label('From the editor',acc);para(e.cover,'serif','italic',10,INK,1.4);adv(2)}
  /* ---- page 2: convergence, G-SIB implications, questions ---- */
  if(doc.getNumberOfPages()===1)newPage();else adv(4);
- section('SSM priority follow-up trails','Planned OSIs / reviews → data request → findings → remediation ask → next checkpoint');
+ 
+ /* ---- crisis clarity, before the official trails ---- */
+ section('Crisis clarity','Two wars, the votes that can move them, one AI and fraud block');
+ WARS.forEach(s=>{label(s.n+' · '+s.asof,acc);s.elements.forEach(el=>para(el.k+'. '+el.v,'serif','normal',10.5,INK,1.4));adv(2)});
+ label('Country elections',acc);
+ ELECTIONS.forEach(e=>para(e.when+' · '+e.where+'. '+e.what,'serif','normal',10.5,INK,1.4));
+ adv(2);label(AIBLOCK.h,acc);para(AIBLOCK.sum,'serif','italic',10.5,INK,1.4);
+ AIBLOCK.bullets.forEach(b=>para(b.t+'. '+b.d,'serif','normal',10.5,INK,1.4));
+ adv(3);
+section('SSM priority follow-up trails','Planned OSIs / reviews → data request → findings → remediation ask → next checkpoint');
  cols(2);
  VULNS.forEach(v=>{need(34);const pc=hexRgb(v.pid==='p1'?'#9A3412':'#1F3A5F');font('sans','bold',6.6,pc);doc.text(clean(`${v.code} · ${v.P.short.toUpperCase()}`),L.x,L.y,{baseline:'top',charSpace:.15});
   font('serif','bold',8,acc);doc.text(`Index ${vsai(v.id,scIn).score}`,L.x+L.w,L.y-.4,{baseline:'top',align:'right'});adv(3.6);

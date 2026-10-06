@@ -120,11 +120,12 @@ function renderNavCount(){$('#briefN').textContent=finalOrder().length}
 /* ---------- FRONT ---------- */
 function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" data-id="${i.id}"><div class="sbody">${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p>${srcLine(i)}</div><div class="sfoot">${critChip(i)}${relvTag(i)}<span style="margin-left:auto;display:flex;gap:6px;align-items:center">${inBrief(i)}${curBtns(i)}</span></div></article>`}
 function renderFront(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
- const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="sh"><h2>From the wires</h2></div><div class="wires">'+(WIRES||[]).slice(0,4).map(w=>wireCard(w)).join('')+'</div><div class="empty">No publications in scope.</div>';return}
+ const L=pool[0];if(!L){$('#main').innerHTML='<div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
- const wires=WIRES.slice(0,4).map(wireCard).join('');
- const briefs=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p></article>`).join('');
- $('#main').innerHTML=`<div class="sh"><h2>Situation</h2><span class="sub">News media, not a supervisory paper</span><button class="more" data-act="view" data-v="geo">Full brief ${ic('arrow',13,2)}</button></div><div class="sit">${briefs}</div><div class="sh"><h2>From the wires</h2><span class="sub">Geopolitics, AI attacks, deepfake fraud</span></div><div class="wires">${wires}</div>`+jurBar()+renderExec()+`<div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
+ const briefs=WARS.map(s=>{const stand=s.elements[0], bank=s.elements[s.elements.length-1];return `<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p><b>${esc(stand.k)}.</b> ${esc(stand.v)}</p><p><b>${esc(bank.k)}.</b> ${esc(bank.v)}</p></article>`}).join('');
+ const votes=ELECTIONS.slice(0,4).map(e=>`<article class="wire"><div class="dt">${esc(e.when)}</div><div><h3>${esc(e.where)}</h3><p>${esc(e.what.split('.').slice(0,1).join('.'))}.</p></div></article>`).join('');
+ const ai=`<article class="wire"><div class="dt">One block</div><div><h3>${esc(AIBLOCK.h)}</h3><p>${esc(AIBLOCK.sum)}</p><ul class="pts">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul></div><button class="lnk" data-act="view" data-v="ai">Open the block</button></article>`;
+ $('#main').innerHTML=`<div class="sh"><h2>Clarity</h2><span class="sub">Two wars, the votes that can move them, one AI and fraud block</span></div><div class="sit">${briefs}</div><div class="sh"><h2>Elections</h2></div><div class="wires">${votes}</div><div class="sh"><h2>AI and fraud</h2></div><div class="wires">${ai}</div>`+jurBar()+renderExec()+`<div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
  <section class="lead story" data-id="${L.id}"><div>${kicker(L)}<h2 class="hl" data-act="read" data-id="${L.id}">${esc(L.h)}</h2><p class="brief">${esc(L.brief)}</p>${srcLine(L)}
   <div class="leadmeta" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">${critChip(L)}${adjLine(L)||reasonLine(L)}${relvTag(L)}${curBtns(L)}${inBrief(L)}</div>
   <div style="margin-top:16px"><button class="pbtn" data-act="read" data-id="${L.id}">Extraction &amp; citations ${ic('arrow',14,2)}</button></div></div>
@@ -350,14 +351,16 @@ function watchlist(){const c=client();$('#modal').innerHTML=`<div style="display
 /* ---------- render & actions ---------- */
 
 function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p>${w.why?`<p class="why"><b>For a bank. </b>${esc(w.why)}</p>`:''}</div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
-function renderGeo(){const wars=(SITUATIONS||[]).map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
- $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Wars and elections as reported in the news, with a situation brief so a single headline has context. Not a supervisory publication.</p></div><div class="stat"><b>2</b> wars<br>in the brief</div></div>
- <div class="sit">${wars}</div>
- <div class="sh"><h2>Elections</h2><span class="sub">Country votes that can move sanctions, energy policy and bank funding</span></div>
- <div class="wires">${ELECT.map(e=>`<article class="wire"><div class="dt">${esc(e.d)}</div><div><h3>${esc(e.n)}</h3><p>${esc(e.t)}</p></div></article>`).join('')}</div>
- <div class="sh"><h2>From the wires</h2></div><div class="wires">${(WIRES||[]).filter(w=>w.lane==='geo').map(wireCard).join('')}</div>`}
-function renderAi(){$('#main').innerHTML=`<div class="sechead"><div><h1>AI incidents at banks</h1><p>News of attacks and tools hitting banks. Mythos is the capability shift. Korea is the live campaign.</p></div><div class="stat"><b>${(WIRES||[]).filter(w=>w.lane==='ai').length}</b> stories</div></div><div class="wires">${(WIRES||[]).filter(w=>w.lane==='ai').map(wireCard).join('')}</div>`}
-function renderFraud(){$('#main').innerHTML=`<div class="sechead"><div><h1>Fraud at banks</h1><p>Major losses, with deepfakes called out. These are news reports of money or files leaving a bank, not supervisory speeches.</p></div><div class="stat"><b>€95m</b> Fideuram<br>still partly missing</div></div><div class="wires">${(WIRES||[]).filter(w=>w.lane==='fraud').map(wireCard).join('')}</div>`}
+
+function renderGeo(){
+ const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2>${s.elements.map(el=>`<p><b>${esc(el.k)}.</b> ${esc(el.v)}</p>`).join('')}</article>`).join('');
+ const votes=ELECTIONS.map(e=>`<article class="wire"><div class="dt">${esc(e.when)}</div><div><h3>${esc(e.where)}</h3><p>${esc(e.what)}</p></div></article>`).join('');
+ $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Two summaries, then the elections. Not a news feed.</p></div></div><div class="sit">${wars}</div><div class="sh"><h2>Country elections</h2><span class="sub">Votes that can move sanctions, energy policy and funding</span></div><div class="wires">${votes}</div>`;
+}
+function renderAi(){
+ $('#main').innerHTML=`<div class="sechead"><div><h1>${esc(AIBLOCK.h)}</h1><p>${esc(AIBLOCK.sum)}</p></div></div><ul class="pts big">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>`;
+}
+function renderFraud(){S.view='ai';renderAi()}
 function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,fraud:renderFraud,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
 function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
@@ -416,7 +419,7 @@ $('#briefBtn').addEventListener('click',openTray);
 $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');$('#scrim').classList.remove('on')});
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
 $$('#sections button').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.v);history.replaceState(null,'','#'+b.dataset.v)}));
- if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','fraud','themes','desk','calendar','map','priorities'].includes(v))S.view=v}
+ if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','fraud','themes','desk','calendar','map','priorities'].includes(v))S.view=v==='fraud'?'ai':v}
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
 try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
 </script>
