@@ -178,7 +178,7 @@ const THEME_ED={
  ai:{mean:'Buch and Lagarde speeches, SSM GenAI workshops and the RDARR system-wide strategy with escalation make AI and data a rising supervisory topic.',gsib:'RDARR capability is a G-SIB baseline expectation; AI use-case governance will be compared across global peers.',q:['Which RDARR findings remain open, and what is the escalation risk?','What is your inventory of generative-AI use cases and their controls?']},
  crypto:{mean:'No SSM item in this sample. MiCA perimeter items (e.g. CNMV) are outside v1 scope.',gsib:'Tokenisation and stablecoin partnerships may draw cross-supervisor attention.',q:['Do any group entities provide crypto-asset services needing authorisation?']},
  liq:{mean:'The DGS investment consultation closes 23 Oct, FX-LCR weaknesses surfaced in the reverse stress test, and the CMDI reform is in the OJ.',gsib:'FX liquidity across subsidiaries and resolution funding under CMDI are G-SIB-specific concerns.',q:['How does FX LCR behave under your own geopolitical scenario?']},
- gov:{mean:'Simplification comes with sharper escalation; on-site reform and published PPPs (ABANCA, Crédit Agricole) raise the cost of slow remediation.',gsib:'Board accountability for remediation across many legal entities is a structural G-SIB challenge.',q:['Which open findings are past due, and what is the board’s escalation view?']}
+ gov:{mean:'Simplification comes with sharper escalation; on-site reform and published penalty cases sit on the supervisory desk, not this crisis edition.',gsib:'Board accountability for remediation across many legal entities is a structural G-SIB challenge.',q:['Which open findings are past due, and what is the board’s escalation view?']}
 };
 
 /* ============ SSM PRIORITIES 2026–28 = THE SPINE ============
@@ -211,7 +211,7 @@ const PRIOS=[
    fu:{plan:{t:'Remediation follow-up (2022 thematic review); transition-planning thematic review (CRD VI); Pillar 3 ESG assessment; physical-risk deep dive',d:'2026–28',st:'progress',src:'E13'},
        data:{t:'EBA ESG supervisory-reporting ITS: consultation closed 10 Jul 2026, final ITS pending; phase 2 from 09/2027 (tentative)',d:'Closed 10 Jul 2026',st:'progress',src:'E18'},
        find:{t:'Climate-risk materiality assessment not completed by the ECB deadline (31 May 2024) at some banks',d:'2025–26',st:'published',src:'E11'},
-       rem:{t:'Periodic penalty payments until compliance: ABANCA €187,650 (Oct 2025), Crédit Agricole €7.55m (Feb 2026)',d:'Deadline 31 May 2024',st:'overdue',src:'E12',sh:'climate deadline (31 May 2024) missed by some banks; PPPs on ABANCA (€187,650) and Crédit Agricole (€7.55m)'},
+       rem:{t:'Climate-risk penalties are tracked on the supervisory radar',d:'Deadline 31 May 2024',st:'overdue',src:'E12',sh:'Climate-risk deadline misses are on the supervisory radar'},
        next:{t:'ESG reporting phase 2 (tentative)',d:'Sep 2027',st:'upcoming',src:'E18'}}}]},
  {id:'p2',p:'Priority 2',short:'Operational resilience & ICT',t:'Strengthening banks’ operational resilience and fostering robust ICT capabilities',url:PRIO_URL,
   gsib:'Critical functions run on shared group ICT and third-party platforms across many jurisdictions. G-SIB status raises the bar on recovery-time evidence, TLPT, concentration on cloud providers and RDARR, which is a BCBS 239 baseline for G-SIBs.',
