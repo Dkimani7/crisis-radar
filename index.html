@@ -1066,6 +1066,25 @@ button.prc:hover{filter:brightness(1.15)}
  .sit article h2{font-size:20px}
 }
 .pts{margin:12px 0 0;padding-left:18px}.pts li{margin:0 0 12px;font:400 16px/1.45 var(--serif)}.pts.big li{font-size:17.5px;margin-bottom:16px}
+
+.xsum{border-top:3px solid var(--navy);background:#fff;padding:16px 18px;margin:0 0 18px}
+.xsum h2{margin:0 0 6px;font:700 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
+.xsum p{margin:0;font:400 17px/1.45 var(--serif)}
+.geoplay{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:22px;align-items:start}
+.erail{border-left:1px solid var(--rule);padding-left:16px}
+.erail h2{margin:0 0 10px;font:700 13px var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.evote{display:grid;grid-template-columns:36px 1fr;gap:8px;padding:10px 0;border-top:1px solid var(--rule)}
+.evote .fl{font-size:26px;line-height:1}
+.evote b{display:block;font:600 14px var(--sans)}
+.evote small{color:var(--ink3);font:600 11px var(--sans);letter-spacing:.04em}
+.tag{display:inline-block;font:700 10px var(--sans);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule);padding:2px 6px;margin-right:6px}
+.src{font:600 12px var(--sans);color:var(--accent)}
+.angle{margin-top:14px;padding:12px 14px;background:var(--paper2);border-left:3px solid var(--navy);font:400 14.5px/1.45 var(--serif)}
+.hots{position:relative;height:420px;background:linear-gradient(#eef2f4,#f7f4ee);border:1px solid var(--rule);margin-top:12px}
+.hot{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid #fff;transform:translate(-50%,-50%);cursor:pointer}
+.hot span{display:none;position:absolute;left:20px;top:-8px;width:220px;background:#fff;border:1px solid var(--rule);padding:8px 10px;z-index:2}
+.hot:hover span,.hot:focus span{display:block}
+@media(max-width:800px){.geoplay{grid-template-columns:1fr}.erail{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:12px}}
 </style>
 </head>
 <body>
@@ -1089,10 +1108,6 @@ button.prc:hover{filter:brightness(1.15)}
     <button data-v="front" class="on">Front Page</button>
     <button data-v="geo">Geopolitics</button>
     <button data-v="ai">AI & fraud</button>
-    <button data-v="priorities" id="prioNav">Stress & resolution</button>
-    <button data-v="themes">Themes</button>
-    <button data-v="desk">Desk</button>
-    <button data-v="calendar">Calendar</button>
     <button data-v="map">Map</button>
   </div>
   <div class="navr"><button class="briefbtn" id="briefBtn"><span data-i="bookmark"></span>Monday’s Brief <span class="n num" id="briefN">0</span></button></div>
@@ -1377,14 +1392,14 @@ const WARS=[
    {k:'Where it stands',v:'Eighth month. This is no longer a short supply shock. The Strait of Hormuz is the leverage point.'},
    {k:'What moved',v:'On 9 September Iran attacked ships near Hormuz and the US sank five Iranian tankers. Brent settled at $101. On 6 October Chevron said physical crude landed in Asia is closer to $150 than the futures price near $100.'},
    {k:'What is at stake',v:'About a fifth of traded oil went through Hormuz before the war. The G7 agreed a 100 million barrel release. JPMorgan has no baseline for how it ends, with about 10 million barrels a day already disrupted.'},
-   {k:'For a bank',v:'USD funding, refined-product prices, and sanctions screening on shipping. Do not lock the scenario to one ceasefire date.'}
+   {k:'Transmission',v:'Several channels, not one. Energy prices, USD funding, sanctions screening on shipping, and confidence in refined-product markets.'}
   ]},
  {id:'ukr',n:'Russia and Ukraine',asof:'late September 2026',
   elements:[
    {k:'Where it stands',v:'A stuck front and a winter strike campaign. Territory is not moving the way Moscow claims.'},
    {k:'What moved',v:'The Institute for the Study of War says Russian net gains since March are near zero. Ukrainian counterattacks continue toward Kupyansk, Oleksandrivka and Lyman. Russia launched 173 drones overnight on 25–26 September.'},
    {k:'What is at stake',v:'Energy infrastructure into winter, sanctions, and cyber. The US signed the Graham sanctions act on Russia and Iran on 18 September.'},
-   {k:'For a bank',v:'The credit channel is energy, cyber and sanctions, not a map of villages.'}
+   {k:'Transmission',v:'Several channels. Energy infrastructure, sanctions, cyber, and winter confidence. Not a map of villages.'}
   ]}
 ];
 const ELECTIONS=[
@@ -1404,6 +1419,25 @@ const AIBLOCK={
   {t:'Model capability · Mythos',d:'Anthropic’s Claude Mythos, April, released to selected partners. Nikkei on 2 October: Japanese banks are finding about twice as many flaws. Palo Alto found 75 in a month and a working exploit more than 70% of the time.'}
  ]
 };
+
+const FLAGS={Brazil:'🇧🇷',Israel:'🇮🇱','United States':'🇺🇸','New Zealand':'🇳🇿',Spain:'🇪🇸',Romania:'🇷🇴'};
+const GNEWS=[
+ {topic:'War',tag:'War · Iran',where:'Strait of Hormuz',d:'9 Sep 2026',src:'Reuters',u:'https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/',h:'Shipping strikes put Brent back through $100',b:'Iran said it attacked 10 ships near Hormuz. The US sank five Iranian tankers. Brent settled at $101.21.'},
+ {topic:'War',tag:'War · Energy',where:'London',d:'6 Oct 2026',src:'Reuters',u:'https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/',h:'Chevron: fuel buffers are thinner in month eight',b:'Physical crude landed in Asia is closer to $150 than the futures price near $100. The G7 agreed a 100 million barrel release.'},
+ {topic:'War',tag:'War · Ukraine',where:'Eastern Ukraine',d:'26 Sep 2026',src:'ISW',u:'https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/',h:'Front barely moves. The drone campaign does',b:'Russian net gains since March are near zero. 173 drones were launched overnight on 25–26 September.'},
+ {topic:'Election',tag:'Election · United States',where:'United States',d:'6 Oct 2026',src:'Christian Science Monitor',u:'https://www.csmonitor.com/USA/Foreign-Policy/2026/1006/trump-foreign-policy-iran-war-oil-midterms',h:'The Iran war is the midterm foreign-policy issue',b:'A Chicago Council survey found 86% say the war has been bad for the cost of living. Vote is 3 November.'}
+];
+const SUPER={
+ geo:'The supervisory reading of the same wars is the ECB’s 2026 reverse stress test: banks built their own geopolitical scenarios, and some foreign-currency liquidity ratios fell below 100%. The ESAs’ autumn note adds a second channel, reliance on non-EU ICT providers. Source: ECB Banking Supervision, 11 Sep 2026; ESMA, 9 Sep 2026.',
+ ai:'The ESAs’ autumn update groups capable AI models with cyber risk, and names external ICT dependence as the amplifier. That is the supervisory angle on the same incidents below. Source: ESMA, 9 Sep 2026.'
+};
+const HOTS=[
+ {x:62,y:42,n:'Strait of Hormuz',t:'War',d:'Shipping strikes, 9 Sep. Brent settled at $101.'},
+ {x:58,y:34,n:'Ukraine',t:'War',d:'Stuck front, winter drone campaign. 173 drones on 25–26 Sep.'},
+ {x:84,y:38,n:'Seoul',t:'AI intrusion',d:'Seven firms, about 66,000 people. No funds stolen. Artex traces.'},
+ {x:52,y:36,n:'Milan',t:'Deepfake fraud',d:'Fideuram, €95 million sent. About €36 million still missing.'},
+ {x:86,y:40,n:'Tokyo',t:'Model risk',d:'Japanese banks finding about twice the flaws since Mythos.'}
+];
 </script>
 <script>
 /* ============ CORE HELPERS ============ */
@@ -1639,7 +1673,7 @@ function renderNavCount(){$('#briefN').textContent=finalOrder().length}
 
 /* ---------- FRONT ---------- */
 function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" data-id="${i.id}"><div class="sbody">${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p>${srcLine(i)}</div><div class="sfoot">${critChip(i)}${relvTag(i)}<span style="margin-left:auto;display:flex;gap:6px;align-items:center">${inBrief(i)}${curBtns(i)}</span></div></article>`}
-function renderFront(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
+function renderFrontOld(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML='<div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
  const briefs=WARS.map(s=>{const stand=s.elements[0], bank=s.elements[s.elements.length-1];return `<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p><b>${esc(stand.k)}.</b> ${esc(stand.v)}</p><p><b>${esc(bank.k)}.</b> ${esc(bank.v)}</p></article>`}).join('');
@@ -1725,7 +1759,7 @@ function renderCalendar(){const c=client(),pipe=PIPE.filter(p=>S.jur==='global'|
 let WORLD=null,MAPP=null;
 async function loadWorld(){if(WORLD)return WORLD;try{const r=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');const t=await r.json();WORLD=topojson.feature(t,t.objects.countries)}catch(e){WORLD=null}return WORLD}
 function ccStats(cc){const pool=INC.filter(i=>i.j==='ea'&&!isOut(i.id));return {nat:pool.filter(i=>i.cc===cc),wide:pool.filter(i=>!i.cc)}}
-function renderMap(){const c=client();S.ctx=[];
+function renderMapOld(){const c=client();S.ctx=[];
  const isEA=S.jur==='ea'||S.jur==='global';
  const sel=S.cc?EA_BY[S.cc]:null,stt=S.cc?ccStats(S.cc):null;
  const list=S.cc?scope().filter(i=>!isOut(i.id)).sort((a,b)=>(b.cc===S.cc)-(a.cc===S.cc)||rank(a,b)):[];
@@ -1872,16 +1906,45 @@ function watchlist(){const c=client();$('#modal').innerHTML=`<div style="display
 
 function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p>${w.why?`<p class="why"><b>For a bank. </b>${esc(w.why)}</p>`:''}</div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
 
-function renderGeo(){
+function renderGeoOld(){
  const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2>${s.elements.map(el=>`<p><b>${esc(el.k)}.</b> ${esc(el.v)}</p>`).join('')}</article>`).join('');
  const votes=ELECTIONS.map(e=>`<article class="wire"><div class="dt">${esc(e.when)}</div><div><h3>${esc(e.where)}</h3><p>${esc(e.what)}</p></div></article>`).join('');
  $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Two summaries, then the elections. Not a news feed.</p></div></div><div class="sit">${wars}</div><div class="sh"><h2>Country elections</h2><span class="sub">Votes that can move sanctions, energy policy and funding</span></div><div class="wires">${votes}</div>`;
 }
-function renderAi(){
+function renderAiOld(){
  $('#main').innerHTML=`<div class="sechead"><div><h1>${esc(AIBLOCK.h)}</h1><p>${esc(AIBLOCK.sum)}</p></div></div><ul class="pts big">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>`;
 }
 function renderFraud(){S.view='ai';renderAi()}
-function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,fraud:renderFraud,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
+
+function execSum(t,p){return `<section class="xsum"><h2>Executive summary</h2><p>${esc(p)}</p></section>`}
+function voteRail(){return `<aside class="erail"><h2>Elections</h2>${ELECTIONS.map(e=>`<div class="evote"><div class="fl">${FLAGS[e.where]||'🏳️'}</div><div><b>${esc(e.where)}</b><small>${esc(e.when)}</small><p>${esc(e.what)}</p></div></div>`).join('')}</aside>`}
+function newsList(items){return items.map(n=>`<article class="wire"><div class="dt">${esc(n.d)}<br><span class="tag">${esc(n.tag)}</span></div><div><h3>${esc(n.h)}</h3><p>${esc(n.b)}</p><a class="src" href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.src)} ↗</a></div></article>`).join('')}
+function renderFront(){
+ const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p><b>${esc(s.elements[0].k)}.</b> ${esc(s.elements[0].v)}</p></article>`).join('');
+ $('#main').innerHTML=execSum('', 'Two wars set the price of energy and the sanctions map. A short list of elections can move both. AI risk is one block: models that find exploits, and models that impersonate a person. The only disclosed bank cash loss is Fideuram.')+
+  `<div class="geoplay"><div><div class="sh"><h2>The two wars</h2><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="sit">${wars}</div>
+   <div class="sh"><h2>AI, model risk and fraud</h2><button class="more" data-act="view" data-v="ai">Open ${ic('arrow',13,2)}</button></div>
+   <p>${esc(AIBLOCK.sum)}</p><ul class="pts">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>
+   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.ai)}</div></div>${voteRail()}</div>`;
+}
+function renderGeo(){
+ const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2>${s.elements.filter(el=>el.k!=='For a bank').map(el=>`<p><b>${esc(el.k)}.</b> ${esc(el.v)}</p>`).join('')}</article>`).join('');
+ $('#main').innerHTML=execSum('', 'Hormuz is an energy and shipping crisis in its eighth month. Ukraine is a stuck front plus a winter strike campaign. Elections sit beside that, not inside it. Transmission runs through several channels.')+
+  `<div class="geoplay"><div><div class="sh"><h2>The two wars</h2></div><div class="sit" style="grid-template-columns:1fr">${wars}</div>
+   <div class="sh"><h2>Relevant news, by topic</h2></div><div class="wires">${newsList(GNEWS)}</div>
+   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.geo)}</div></div>${voteRail()}</div>`;
+}
+function renderAi(){
+ $('#main').innerHTML=execSum('', 'One disclosed bank cash loss: Fideuram sent €95 million after a fake WhatsApp and an AI-cloned voice. About €36 million is still missing. Korean banks lost records, not funds. Mythos is the capability shift, not a booked loss.')+
+  `<ul class="pts big">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>
+   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.ai)}</div>
+   <p class="cap" style="margin-top:10px">Sources: Reuters, 25 Sep 2026; Financial Times and Korea Herald, 6 Oct 2026; Nikkei Asia, 2 Oct 2026.</p>`;
+}
+function renderMap(){
+ $('#main').innerHTML=execSum('', 'Five incident hotspots. Hover a point for the event. This is not a jurisdiction map.')+
+  `<div class="hots">${HOTS.map(h=>`<button class="hot" style="left:${h.x}%;top:${h.y}%" title="${esc(h.n)}"><span><b>${esc(h.n)}</b><br><span class="tag">${esc(h.t)}</span><br>${esc(h.d)}</span></button>`).join('')}</div>`;
+}
+function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,map:renderMap})[S.view]||renderFront()}
 function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};
@@ -1939,7 +2002,7 @@ $('#briefBtn').addEventListener('click',openTray);
 $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');$('#scrim').classList.remove('on')});
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
 $$('#sections button').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.v);history.replaceState(null,'','#'+b.dataset.v)}));
- if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','fraud','themes','desk','calendar','map','priorities'].includes(v))S.view=v==='fraud'?'ai':v}
+ if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','map'].includes(v))S.view=v}
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
 try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
 </script>

@@ -119,7 +119,7 @@ function renderNavCount(){$('#briefN').textContent=finalOrder().length}
 
 /* ---------- FRONT ---------- */
 function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" data-id="${i.id}"><div class="sbody">${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p>${srcLine(i)}</div><div class="sfoot">${critChip(i)}${relvTag(i)}<span style="margin-left:auto;display:flex;gap:6px;align-items:center">${inBrief(i)}${curBtns(i)}</span></div></article>`}
-function renderFront(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
+function renderFrontOld(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML='<div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
  const briefs=WARS.map(s=>{const stand=s.elements[0], bank=s.elements[s.elements.length-1];return `<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p><b>${esc(stand.k)}.</b> ${esc(stand.v)}</p><p><b>${esc(bank.k)}.</b> ${esc(bank.v)}</p></article>`}).join('');
@@ -205,7 +205,7 @@ function renderCalendar(){const c=client(),pipe=PIPE.filter(p=>S.jur==='global'|
 let WORLD=null,MAPP=null;
 async function loadWorld(){if(WORLD)return WORLD;try{const r=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');const t=await r.json();WORLD=topojson.feature(t,t.objects.countries)}catch(e){WORLD=null}return WORLD}
 function ccStats(cc){const pool=INC.filter(i=>i.j==='ea'&&!isOut(i.id));return {nat:pool.filter(i=>i.cc===cc),wide:pool.filter(i=>!i.cc)}}
-function renderMap(){const c=client();S.ctx=[];
+function renderMapOld(){const c=client();S.ctx=[];
  const isEA=S.jur==='ea'||S.jur==='global';
  const sel=S.cc?EA_BY[S.cc]:null,stt=S.cc?ccStats(S.cc):null;
  const list=S.cc?scope().filter(i=>!isOut(i.id)).sort((a,b)=>(b.cc===S.cc)-(a.cc===S.cc)||rank(a,b)):[];
@@ -352,16 +352,45 @@ function watchlist(){const c=client();$('#modal').innerHTML=`<div style="display
 
 function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p>${w.why?`<p class="why"><b>For a bank. </b>${esc(w.why)}</p>`:''}</div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
 
-function renderGeo(){
+function renderGeoOld(){
  const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2>${s.elements.map(el=>`<p><b>${esc(el.k)}.</b> ${esc(el.v)}</p>`).join('')}</article>`).join('');
  const votes=ELECTIONS.map(e=>`<article class="wire"><div class="dt">${esc(e.when)}</div><div><h3>${esc(e.where)}</h3><p>${esc(e.what)}</p></div></article>`).join('');
  $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Two summaries, then the elections. Not a news feed.</p></div></div><div class="sit">${wars}</div><div class="sh"><h2>Country elections</h2><span class="sub">Votes that can move sanctions, energy policy and funding</span></div><div class="wires">${votes}</div>`;
 }
-function renderAi(){
+function renderAiOld(){
  $('#main').innerHTML=`<div class="sechead"><div><h1>${esc(AIBLOCK.h)}</h1><p>${esc(AIBLOCK.sum)}</p></div></div><ul class="pts big">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>`;
 }
 function renderFraud(){S.view='ai';renderAi()}
-function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,fraud:renderFraud,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
+
+function execSum(t,p){return `<section class="xsum"><h2>Executive summary</h2><p>${esc(p)}</p></section>`}
+function voteRail(){return `<aside class="erail"><h2>Elections</h2>${ELECTIONS.map(e=>`<div class="evote"><div class="fl">${FLAGS[e.where]||'🏳️'}</div><div><b>${esc(e.where)}</b><small>${esc(e.when)}</small><p>${esc(e.what)}</p></div></div>`).join('')}</aside>`}
+function newsList(items){return items.map(n=>`<article class="wire"><div class="dt">${esc(n.d)}<br><span class="tag">${esc(n.tag)}</span></div><div><h3>${esc(n.h)}</h3><p>${esc(n.b)}</p><a class="src" href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.src)} ↗</a></div></article>`).join('')}
+function renderFront(){
+ const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p><b>${esc(s.elements[0].k)}.</b> ${esc(s.elements[0].v)}</p></article>`).join('');
+ $('#main').innerHTML=execSum('', 'Two wars set the price of energy and the sanctions map. A short list of elections can move both. AI risk is one block: models that find exploits, and models that impersonate a person. The only disclosed bank cash loss is Fideuram.')+
+  `<div class="geoplay"><div><div class="sh"><h2>The two wars</h2><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="sit">${wars}</div>
+   <div class="sh"><h2>AI, model risk and fraud</h2><button class="more" data-act="view" data-v="ai">Open ${ic('arrow',13,2)}</button></div>
+   <p>${esc(AIBLOCK.sum)}</p><ul class="pts">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>
+   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.ai)}</div></div>${voteRail()}</div>`;
+}
+function renderGeo(){
+ const wars=WARS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2>${s.elements.filter(el=>el.k!=='For a bank').map(el=>`<p><b>${esc(el.k)}.</b> ${esc(el.v)}</p>`).join('')}</article>`).join('');
+ $('#main').innerHTML=execSum('', 'Hormuz is an energy and shipping crisis in its eighth month. Ukraine is a stuck front plus a winter strike campaign. Elections sit beside that, not inside it. Transmission runs through several channels.')+
+  `<div class="geoplay"><div><div class="sh"><h2>The two wars</h2></div><div class="sit" style="grid-template-columns:1fr">${wars}</div>
+   <div class="sh"><h2>Relevant news, by topic</h2></div><div class="wires">${newsList(GNEWS)}</div>
+   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.geo)}</div></div>${voteRail()}</div>`;
+}
+function renderAi(){
+ $('#main').innerHTML=execSum('', 'One disclosed bank cash loss: Fideuram sent €95 million after a fake WhatsApp and an AI-cloned voice. About €36 million is still missing. Korean banks lost records, not funds. Mythos is the capability shift, not a booked loss.')+
+  `<ul class="pts big">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>
+   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.ai)}</div>
+   <p class="cap" style="margin-top:10px">Sources: Reuters, 25 Sep 2026; Financial Times and Korea Herald, 6 Oct 2026; Nikkei Asia, 2 Oct 2026.</p>`;
+}
+function renderMap(){
+ $('#main').innerHTML=execSum('', 'Five incident hotspots. Hover a point for the event. This is not a jurisdiction map.')+
+  `<div class="hots">${HOTS.map(h=>`<button class="hot" style="left:${h.x}%;top:${h.y}%" title="${esc(h.n)}"><span><b>${esc(h.n)}</b><br><span class="tag">${esc(h.t)}</span><br>${esc(h.d)}</span></button>`).join('')}</div>`;
+}
+function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,map:renderMap})[S.view]||renderFront()}
 function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};
@@ -419,7 +448,7 @@ $('#briefBtn').addEventListener('click',openTray);
 $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');$('#scrim').classList.remove('on')});
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
 $$('#sections button').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.v);history.replaceState(null,'','#'+b.dataset.v)}));
- if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','fraud','themes','desk','calendar','map','priorities'].includes(v))S.view=v==='fraud'?'ai':v}
+ if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','map'].includes(v))S.view=v}
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
 try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
 </script>

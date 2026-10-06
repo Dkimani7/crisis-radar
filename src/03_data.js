@@ -268,14 +268,14 @@ const WARS=[
    {k:'Where it stands',v:'Eighth month. This is no longer a short supply shock. The Strait of Hormuz is the leverage point.'},
    {k:'What moved',v:'On 9 September Iran attacked ships near Hormuz and the US sank five Iranian tankers. Brent settled at $101. On 6 October Chevron said physical crude landed in Asia is closer to $150 than the futures price near $100.'},
    {k:'What is at stake',v:'About a fifth of traded oil went through Hormuz before the war. The G7 agreed a 100 million barrel release. JPMorgan has no baseline for how it ends, with about 10 million barrels a day already disrupted.'},
-   {k:'For a bank',v:'USD funding, refined-product prices, and sanctions screening on shipping. Do not lock the scenario to one ceasefire date.'}
+   {k:'Transmission',v:'Several channels, not one. Energy prices, USD funding, sanctions screening on shipping, and confidence in refined-product markets.'}
   ]},
  {id:'ukr',n:'Russia and Ukraine',asof:'late September 2026',
   elements:[
    {k:'Where it stands',v:'A stuck front and a winter strike campaign. Territory is not moving the way Moscow claims.'},
    {k:'What moved',v:'The Institute for the Study of War says Russian net gains since March are near zero. Ukrainian counterattacks continue toward Kupyansk, Oleksandrivka and Lyman. Russia launched 173 drones overnight on 25–26 September.'},
    {k:'What is at stake',v:'Energy infrastructure into winter, sanctions, and cyber. The US signed the Graham sanctions act on Russia and Iran on 18 September.'},
-   {k:'For a bank',v:'The credit channel is energy, cyber and sanctions, not a map of villages.'}
+   {k:'Transmission',v:'Several channels. Energy infrastructure, sanctions, cyber, and winter confidence. Not a map of villages.'}
   ]}
 ];
 const ELECTIONS=[
@@ -295,4 +295,23 @@ const AIBLOCK={
   {t:'Model capability · Mythos',d:'Anthropic’s Claude Mythos, April, released to selected partners. Nikkei on 2 October: Japanese banks are finding about twice as many flaws. Palo Alto found 75 in a month and a working exploit more than 70% of the time.'}
  ]
 };
+
+const FLAGS={Brazil:'🇧🇷',Israel:'🇮🇱','United States':'🇺🇸','New Zealand':'🇳🇿',Spain:'🇪🇸',Romania:'🇷🇴'};
+const GNEWS=[
+ {topic:'War',tag:'War · Iran',where:'Strait of Hormuz',d:'9 Sep 2026',src:'Reuters',u:'https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/',h:'Shipping strikes put Brent back through $100',b:'Iran said it attacked 10 ships near Hormuz. The US sank five Iranian tankers. Brent settled at $101.21.'},
+ {topic:'War',tag:'War · Energy',where:'London',d:'6 Oct 2026',src:'Reuters',u:'https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/',h:'Chevron: fuel buffers are thinner in month eight',b:'Physical crude landed in Asia is closer to $150 than the futures price near $100. The G7 agreed a 100 million barrel release.'},
+ {topic:'War',tag:'War · Ukraine',where:'Eastern Ukraine',d:'26 Sep 2026',src:'ISW',u:'https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/',h:'Front barely moves. The drone campaign does',b:'Russian net gains since March are near zero. 173 drones were launched overnight on 25–26 September.'},
+ {topic:'Election',tag:'Election · United States',where:'United States',d:'6 Oct 2026',src:'Christian Science Monitor',u:'https://www.csmonitor.com/USA/Foreign-Policy/2026/1006/trump-foreign-policy-iran-war-oil-midterms',h:'The Iran war is the midterm foreign-policy issue',b:'A Chicago Council survey found 86% say the war has been bad for the cost of living. Vote is 3 November.'}
+];
+const SUPER={
+ geo:'The supervisory reading of the same wars is the ECB’s 2026 reverse stress test: banks built their own geopolitical scenarios, and some foreign-currency liquidity ratios fell below 100%. The ESAs’ autumn note adds a second channel, reliance on non-EU ICT providers. Source: ECB Banking Supervision, 11 Sep 2026; ESMA, 9 Sep 2026.',
+ ai:'The ESAs’ autumn update groups capable AI models with cyber risk, and names external ICT dependence as the amplifier. That is the supervisory angle on the same incidents below. Source: ESMA, 9 Sep 2026.'
+};
+const HOTS=[
+ {x:62,y:42,n:'Strait of Hormuz',t:'War',d:'Shipping strikes, 9 Sep. Brent settled at $101.'},
+ {x:58,y:34,n:'Ukraine',t:'War',d:'Stuck front, winter drone campaign. 173 drones on 25–26 Sep.'},
+ {x:84,y:38,n:'Seoul',t:'AI intrusion',d:'Seven firms, about 66,000 people. No funds stolen. Artex traces.'},
+ {x:52,y:36,n:'Milan',t:'Deepfake fraud',d:'Fideuram, €95 million sent. About €36 million still missing.'},
+ {x:86,y:40,n:'Tokyo',t:'Model risk',d:'Japanese banks finding about twice the flaws since Mythos.'}
+];
 </script>
