@@ -259,7 +259,6 @@ const PIPE=[
  {j:'ea',inst:'EBA revised SREP & supervisory stress-testing GL',th:'capital',stages:{cons:'done',reply:'closed',fin:'June 2026',impl:'tbc'},cur:'fin',src:'E17'},
  {j:'ea',inst:'CMDI reform (Dir. 2026/806, Reg. 2026/808, Dir. 2026/804)',th:'liq',stages:{cons:'done',reply:'closed',fin:'OJ April 2026',impl:'Transposition (tbc)'},cur:'impl',src:'E06'}
 ];
-</script>
 
 /* ============ CRISIS WIRES · news media, not supervisory papers ============ */
 const SITUATIONS=[
@@ -286,3 +285,4 @@ const WIRES=[
  {lane:'fraud',d:'25 Sep 2026',h:'Intesa’s Fideuram lost €95 million to an AI voice clone',b:'Then-chairman Paolo Molesini received a WhatsApp message that looked like it came from chief executive Carlo Messina, then a call using an AI clone of a senior lawyer. Transfers went mainly to China and Hong Kong. About €53 million was recovered. About €36 million is still missing, routed into crypto. First reported by Corriere della Sera. The bank declined to comment.',s:'Reuters',u:'https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/'},
  {lane:'fraud',d:'14 Sep 2026',h:'Revolut handed customer files to attackers posing as a government agency',b:'The fintech said it shared personal and financial data, including passports, with a party impersonating an Italian government agency. SecurityWeek put the contact at about five months, 680 high-profile accounts and a $3 million ransom demand.',s:'BleepingComputer',u:'https://www.bleepingcomputer.com/tag/banking/'}
 ];
+</script>
