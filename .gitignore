@@ -1,0 +1,4 @@
+.DS_Store
+*.png
+sample-supervisory-brief.pdf
+__pycache__/
