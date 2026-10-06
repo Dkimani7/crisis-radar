@@ -108,11 +108,11 @@ function renderChrome(){const c=client();document.documentElement.style.setPrope
  const sc=scope().filter(i=>!isOut(i.id)),cr=[0,1].map(l=>sc.filter(i=>critOf(i)===l).length);
  const r=radar();
  $('#tagline').innerHTML=`Crisis watch · wars, elections, AI and fraud`;
- $('#earL').innerHTML=`<div class="lab">Monday edition</div><b>${dateLong(EDITION)}</b><br>Live titles as of <span class="num">${hm(EDITION)}</span> CEST · ${scope().length} on this radar`;
- $('#earR').innerHTML=`<div class="lab">Curated by</div><b>${CONSULTANCY}</b><br>${sc.length} in scope · <span style="color:var(--c0);font-weight:600">${cr[0]} critical</span> · ${cr[1]} high`;
+ if($('#earL')) $('#earL').innerHTML=`<div class="lab">Monday edition</div><b>${dateLong(EDITION)}</b><br>Live titles as of <span class="num">${hm(EDITION)}</span> CEST · ${scope().length} on this radar`;
+ if($('#earR')) $('#earR').innerHTML=`<div class="lab">Curated by</div><b>${CONSULTANCY}</b><br>${sc.length} in scope · <span style="color:var(--c0);font-weight:600">${cr[0]} critical</span> · ${cr[1]} high`;
  const tk=datedItems().filter(d=>daysTo(d.iso)>=-3).slice(0,8);
  const items=tk.map(d=>`<button data-act="read" data-id="${d.i.id}"><b>${esc(dShort(d.iso))}</b><span>${esc(BODY[d.i.b].s)} · ${esc(d.k)}: ${esc(d.i.h)}</span></button>`).join('');
- $('#track').innerHTML=items+items;
+ if($('#track')) $('#track').innerHTML=items+items;
  $('#clientMenu').innerHTML=`<div class="h">Client edition</div>${Object.values(CLIENTS).map(x=>`<button class="${x.id===S.client?'on':''}" data-act="client" data-c="${x.id}"><span class="logo" style="background:${x.accent}">${x.logo}</span><span><b>${esc(x.name)}</b><br><small>${esc(x.type)}</small></span></button>`).join('')}<div class="h" style="border-top:1px solid var(--rule);margin-top:6px;padding-top:10px;text-transform:none;letter-spacing:0;font-weight:500;font-size:11.5px">The same official feed is scored against each client’s presence and status. Demo clients are fictional.</div>`;
  renderNavCount()}
 function renderNavCount(){$('#briefN').textContent=finalOrder().length}
@@ -391,7 +391,7 @@ function renderMap(){
   `<div class="hots">${HOTS.map(h=>`<button class="hot" style="left:${h.x}%;top:${h.y}%" title="${esc(h.n)}"><span><b>${esc(h.n)}</b><br><span class="tag">${esc(h.t)}</span><br>${esc(h.d)}</span></button>`).join('')}</div>`;
 }
 function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,map:renderMap})[S.view]||renderFront()}
-function renderAll(){renderChrome();try{const keep=document.querySelector('#main').innerHTML;renderMain();const m=document.querySelector('#main'); if(m&&!m.textContent.trim()) m.innerHTML=keep}catch(e){const m=document.querySelector('#main'); if(m&&!m.textContent.trim()) m.innerHTML='<div class="empty">'+esc(e.message)+'</div>'}if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
+function renderAll(){renderChrome();try{const keep=document.querySelector('#main').innerHTML;renderMain();const m=document.querySelector('#main'); if(m&&!m.textContent.trim()) m.innerHTML=keep}catch(e){const m=document.querySelector('#main'); if(m&&!m.textContent.trim()) m.innerHTML='<div class="empty">'+esc(e.message)+'</div>'; else console.error(e)}if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};
 function toggleInc(id){const s=st(id);if(s.inc==='in'){setSt(id,{inc:null});E().order=E().order.filter(x=>x!==id);toast('Removed from brief')}else{setSt(id,{inc:'in'});if(!E().order.includes(id))E().order.push(id);toast('Included in Monday’s brief')}save();$('#briefBtn').classList.remove('bump');void $('#briefBtn').offsetWidth;$('#briefBtn').classList.add('bump');renderAll()}
