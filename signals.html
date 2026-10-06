@@ -1135,8 +1135,8 @@ button.prc:hover{filter:brightness(1.15)}
 <nav class="nav" id="nav"><div class="wrap">
   <div class="mini" id="miniTitle">Crisis Radar</div>
   <div class="sections" id="sections">
-<a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/crisis.html" data-p="front">Front Page</a>
-<a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/signals.html" data-p="signals">Signals</a>
+<a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/crisis.html" data-p="front" >Front Page</a>
+<a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/signals.html" data-p="signals" class="on">Signals</a>
 <a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/geo.html" data-p="geo">Geopolitics</a>
 <a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/ai.html" data-p="ai">AI & fraud</a>
 <a href="https://htmlpreview.github.io/?https://github.com/Dkimani7/crisis-radar/blob/main/map2.html" data-p="map">Map</a>
@@ -1145,15 +1145,52 @@ button.prc:hover{filter:brightness(1.15)}
 </div></nav>
 </div>
 
-<main class="wrap page" id="main"><section class="pane on" id="ai">
-<section class="xsum"><h2>Executive summary</h2><p>One disclosed bank cash loss. Fideuram, the private bank of Intesa Sanpaolo, sent €95 million after a WhatsApp that looked like the chief executive and a call that used an AI clone of a lawyer’s voice. About €53 million was recovered. About €36 million is still missing. Korean banks lost customer records, not funds. Mythos is a capability shift, not a booked loss.</p></section>
-<ul class="pts big">
-<li><b>Deepfake fraud, Fideuram.</b> February, reported 25 September. Transfers went mainly to China and Hong Kong, then into crypto. The then-chairman resigned. The bank declined to comment. <a class="src" href="https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/">Reuters ↗</a></li>
-<li><b>AI intrusion, South Korea.</b> 28 September to 6 October. Shinhan, KB Kookmin, Hana, BNK Busan, two savings banks and Hyundai Capital. About 66,000 people. Entry was a loan-broker portal. Investigators point to Artex. No funds stolen. <a class="src" href="https://www.reuters.com/world/south-koreas-lee-says-ai-appears-have-been-used-bank-hacks-2026-10-06/">Reuters ↗</a></li>
-<li><b>Model capability, Mythos.</b> Anthropic’s Claude Mythos, April, limited release. Nikkei on 2 October: Japanese banks finding about twice the flaws. Palo Alto found 75 in a month. <a class="src" href="https://asia.nikkei.com/spotlight/cybersecurity/japan-banks-uncover-twice-the-vulnerabilities-following-mythos-ai-release">Nikkei Asia ↗</a></li>
-</ul>
-<div class="angle"><b>Supervisory angle. </b>The ESAs’ autumn update groups capable AI models with cyber risk, and names dependence on non-EU ICT providers as the amplifier. Source: ESMA, 9 Sep 2026.</div>
-</section>
+<main class="wrap page" id="main">
+<section class="xsum"><h2>Signals</h2><p>The word is the level. The circle is the count of sourced events in the period. It is not a severity score. Reputation stays unassessed until there is an event.</p></section>
+<div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 4px">
+<div class="kicker">Where pressure is building</div>
+<div class="periods" id="periods">
+<button data-p="week">Week</button>
+<button data-p="month" class="on">Month</button>
+<button data-p="quarter">Quarter</button>
+<button data-p="year">Year</button>
+</div>
+</div>
+<div id="rows"></div>
+<p class="cap" id="note"></p>
+<script>
+var C={
+ week:{geo:2,cyber:2,fraud:0,third:1,ops:0,mkt:0,rep:0,note:"Week of 6 October. Chevron warning, US midterm survey, Korean breach, Mythos note."},
+ month:{geo:4,cyber:2,fraud:1,third:1,ops:0,mkt:0,rep:0,note:"6 September to 6 October. Hormuz strikes, Ukraine assessment, Fideuram, plus the week’s items."},
+ quarter:{geo:4,cyber:2,fraud:1,third:1,ops:0,mkt:0,rep:0,note:"This edition has no sourced events before September. Quarter equals the events on the radar."},
+ year:{geo:4,cyber:2,fraud:1,third:1,ops:0,mkt:0,rep:0,note:"Year view is the same set. A live feed would add earlier incidents. This one does not invent them."}
+};
+var rows=[
+ ["Geopolitical and security","Heightened","geo"],
+ ["Cyber","Elevated","cyber"],
+ ["Financial crime and fraud","Elevated","fraud"],
+ ["Third-party and infrastructure","Elevated","third"],
+ ["Operational disruption","Watch","ops"],
+ ["Financial and market stress","Watch","mkt"],
+ ["Reputation and conduct","Unassessed","rep"]
+];
+function draw(p){
+  var d=C[p];
+  document.getElementById("rows").innerHTML=rows.map(function(r){
+    var n=d[r[2]];
+    var lvl=n?r[1]:"Unassessed";
+    var mute=lvl==="Unassessed"||lvl==="Watch"?" mute":"";
+    var circle=n?'<span class="cnt">'+n+"</span>":'<span class="cnt none">0</span>';
+    return '<div class="sigrow"><span>'+r[0]+'</span><span class="lvl'+mute+'">'+lvl+'</span>'+circle+"</div>";
+  }).join("");
+  document.getElementById("note").textContent=d.note;
+  document.querySelectorAll("#periods button").forEach(function(b){b.classList.toggle("on", b.getAttribute("data-p")===p)});
+}
+document.getElementById("periods").addEventListener("click", function(e){
+  var b=e.target.closest("button"); if(!b) return; draw(b.getAttribute("data-p"));
+});
+draw("month");
+</script>
 </main></main>
 <script>
 function showPane(id){
