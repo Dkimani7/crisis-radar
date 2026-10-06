@@ -122,7 +122,8 @@ function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" d
 function renderFront(){const c=C(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
- $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
+ const wires=WIRES.slice(0,4).map(w=>`<article class="wire"><div class="dt">${esc(w.d)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">${esc(w.s)} ↗</a></article>`).join('');
+ $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:22px"><h2>From the wires</h2><span class="sub">News media · geopolitics, AI attacks, deepfake fraud</span><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="wires">${wires}</div><div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
  <section class="lead story" data-id="${L.id}"><div>${kicker(L)}<h2 class="hl" data-act="read" data-id="${L.id}">${esc(L.h)}</h2><p class="brief">${esc(L.brief)}</p>${srcLine(L)}
   <div class="leadmeta" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">${critChip(L)}${adjLine(L)||reasonLine(L)}${relvTag(L)}${curBtns(L)}${inBrief(L)}</div>
   <div style="margin-top:16px"><button class="pbtn" data-act="read" data-id="${L.id}">Extraction &amp; citations ${ic('arrow',14,2)}</button></div></div>
@@ -346,7 +347,17 @@ function watchlist(){const c=C();$('#modal').innerHTML=`<div style="display:flex
  <p class="reason" style="margin-top:12px">Configured per client by ${CONSULTANCY}. External public sources only; no internal bank data.</p>`;$('#modal').classList.add('on');$('#scrim').classList.add('on')}
 
 /* ---------- render & actions ---------- */
-function renderMain(){({front:renderFront,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
+
+function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
+function renderGeo(){const wars=SITUATIONS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
+ $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Wars and elections as reported in the news, with a situation brief so a single headline has context. Not a supervisory publication.</p></div><div class="stat"><b>2</b> wars<br>in the brief</div></div>
+ <div class="sit">${wars}</div>
+ <div class="sh"><h2>Elections</h2><span class="sub">Country votes that can move sanctions, energy policy and bank funding</span></div>
+ <div class="wires">${ELECT.map(e=>`<article class="wire"><div class="dt">${esc(e.d)}</div><div><h3>${esc(e.n)}</h3><p>${esc(e.t)}</p></div></article>`).join('')}</div>
+ <div class="sh"><h2>From the wires</h2></div><div class="wires">${WIRES.filter(w=>w.lane==='geo').map(wireCard).join('')}</div>`}
+function renderAi(){$('#main').innerHTML=`<div class="sechead"><div><h1>AI incidents at banks</h1><p>News of attacks and tools hitting banks. Mythos is the capability shift. Korea is the live campaign.</p></div><div class="stat"><b>${WIRES.filter(w=>w.lane==='ai').length}</b> stories</div></div><div class="wires">${WIRES.filter(w=>w.lane==='ai').map(wireCard).join('')}</div>`}
+function renderFraud(){$('#main').innerHTML=`<div class="sechead"><div><h1>Fraud at banks</h1><p>Major losses, with deepfakes called out. These are news reports of money or files leaving a bank, not supervisory speeches.</p></div><div class="stat"><b>€95m</b> Fideuram<br>still partly missing</div></div><div class="wires">${WIRES.filter(w=>w.lane==='fraud').map(wireCard).join('')}</div>`}
+function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,fraud:renderFraud,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
 function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};

@@ -7,3 +7,5 @@ Kept: geopolitical reverse stress test, ESRB frontier-AI warning and the 31 Octo
 Rebuild: `./scripts/build.sh`
 
 Open `index.html` in a browser. Map, fonts, and PDF export need the internet.
+
+News sections, fed from media rather than supervisory papers: Geopolitics (Iran–US and Russia–Ukraine situation briefs, plus elections), AI incidents at banks, and major fraud including deepfakes.

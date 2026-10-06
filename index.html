@@ -69,7 +69,7 @@ a{color:inherit}
 .nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:50px}
 .mini{font:900 19px var(--serif);letter-spacing:-.02em;opacity:0;transition:opacity .2s;font-variation-settings:"opsz" 40}
 .stuck .mini{opacity:1}
-.sections{display:flex;gap:34px}
+.sections{display:flex;gap:16px;flex-wrap:wrap}
 .sections button{font:600 12.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);height:50px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s}
 .sections button:hover{color:var(--accent)}
 .sections button.on{color:var(--accent);border-bottom-color:var(--accent)}
@@ -995,6 +995,19 @@ button.prc:hover{filter:brightness(1.15)}
 .glv .gln{font-size:14px}
 .envin .glance{margin-top:16px}.envin .glrow{grid-template-columns:1fr;gap:10px}.envin .glph{padding:6px 12px}.envin .glv{padding:7px 12px}
 
+
+.sit{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 8px}
+.sit article{border:1px solid var(--rule);background:#fff;padding:16px 18px}
+.sit h2{font:600 22px var(--serif);letter-spacing:-.02em;margin:6px 0 8px}
+.sit .asof{font:600 10.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.sit p{font:400 14.5px/1.45 var(--serif);color:var(--ink2);margin:0 0 8px}
+.wires{display:grid;gap:10px;margin-top:8px}
+.wire{display:grid;grid-template-columns:92px 1fr auto;gap:12px;align-items:start;border-top:1px solid var(--rule);padding:12px 0}
+.wire .dt{font:600 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.wire h3{font:600 18px var(--serif);margin:0 0 4px}
+.wire p{margin:0;color:var(--ink2);font-size:14px}
+.wire a{font:600 12px var(--sans);color:var(--accent);white-space:nowrap}
+@media(max-width:800px){.sit{grid-template-columns:1fr}.wire{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1016,6 +1029,9 @@ button.prc:hover{filter:brightness(1.15)}
   <div class="mini" id="miniTitle">Crisis Radar</div>
   <div class="sections" id="sections">
     <button data-v="front" class="on">Front Page</button>
+    <button data-v="geo">Geopolitics</button>
+    <button data-v="ai">AI incidents</button>
+    <button data-v="fraud">Fraud</button>
     <button data-v="priorities" id="prioNav">Stress & resolution</button>
     <button data-v="themes">Themes</button>
     <button data-v="desk">Desk</button>
@@ -1296,6 +1312,32 @@ const PIPE=[
  {j:'ea',inst:'CMDI reform (Dir. 2026/806, Reg. 2026/808, Dir. 2026/804)',th:'liq',stages:{cons:'done',reply:'closed',fin:'OJ April 2026',impl:'Transposition (tbc)'},cur:'impl',src:'E06'}
 ];
 </script>
+
+/* ============ CRISIS WIRES · news media, not supervisory papers ============ */
+const SITUATIONS=[
+ {id:'iran',n:'United States–Iran war',asof:'6 October 2026',
+  sum:'The war is in its eighth month. It is no longer a short supply shock. Shipping through the Strait of Hormuz, which carried about a fifth of globally traded oil before the war, is the leverage point, and strikes on tankers keep testing ceasefires.',
+  now:'On 6 October Chevron’s chief executive said oil and fuel buffers are thinner than earlier in the war, and that physical crude landed in Asia is closer to $150 a barrel than the roughly $100 where Brent futures trade. The G7 agreed last week to release 100 million barrels of crude and diesel. On 9 September Iran attacked ships near Hormuz and the US sank five Iranian tankers, the largest shipping strikes since the war began. Brent settled at $101.21. JPMorgan said in mid-September it has no baseline for how the market ends, with about 10 million barrels a day already disrupted and US diesel at an all-time high of $6.31 a gallon.',
+  src:'Reuters, 6 Oct, 14 Sep and 9 Sep 2026'},
+ {id:'ukr',n:'Russia–Ukraine war',asof:'late September 2026',
+  sum:'The war is a grinding front plus a winter strike campaign. Territory is not moving the way Moscow claims. The pressure is on energy, drones and sanctions.',
+  now:'The Institute for the Study of War assessed in late September that Russian net gains have been near zero since March 2026, while Ukrainian forces have counterattacked toward Kupyansk, Oleksandrivka and Lyman. ISW has recorded about 148 square kilometres seized by Russia this year and at least 973 liberated by Ukraine, against Russian claims of 5,300. Moscow is leaning on long-range drones against energy ahead of winter: 162 drones on 25 September and 173 overnight into 26 September. The US signed the Lindsey Graham Sanctioning Russia and Iran Act on 18 September. US and Ukrainian officials denied a report that President Trump had asked President Zelensky to travel to Moscow for talks.',
+  src:'ISW assessments, 19–26 Sep 2026'}
+];
+const ELECT=[
+ {d:'3 Nov 2026',n:'United States midterms',t:'The Iran war is the foreign-policy issue in the campaign. A Chicago Council survey out this week found 86% of adults say the war has been bad for the cost of living, 72% bad for America’s reputation, and 71% say tariffs are bad for the economy. Polling puts Republicans at a disadvantage. The Senate is still open.'},
+ {d:'2024, still live',n:'Romania',t:'Bucharest annulled a presidential election after investigators tied a far-right candidate’s social-media surge to a Russian influence operation. The same playbook, including cloned news sites, is being reported against the US midterms.'}
+];
+const WIRES=[
+ {lane:'geo',d:'6 Oct 2026',h:'Chevron: fuel buffers thinner as the Iran war enters month eight',b:'Mike Wirth told the Energy Intelligence Forum in London that the energy system is more fragile than earlier in the war, and that landed crude in Asia is closer to $150 than the $100 Brent futures price. The G7 has agreed a 100 million barrel crude and diesel release.',s:'Reuters',u:'https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/'},
+ {lane:'geo',d:'9 Sep 2026',h:'Hormuz shipping strikes push Brent back through $100',b:'Iran said it attacked 10 ships near the Strait of Hormuz. The US sank five Iranian tankers. Brent settled at $101.21, the highest close since 22 May.',s:'Reuters',u:'https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/'},
+ {lane:'geo',d:'17 Sep 2026',h:'JPMorgan: no oil-market endgame as the Iran war drags',b:'The bank said about 10 million barrels a day are already disrupted, US diesel hit $6.31 a gallon, and it cannot model how the war ends.',s:'Reuters',u:'https://www.reuters.com/business/energy/jp-morgan-says-it-has-no-clear-oil-market-endgame-iran-conflict-drags-2026-09-17/'},
+ {lane:'geo',d:'26 Sep 2026',h:'Ukraine: front barely moves, winter strike campaign does',b:'ISW says Russian net gains since March are near zero. Ukrainian counterattacks continue in the Kupyansk, Oleksandrivka and Lyman directions. Russia launched 173 drones overnight on 25–26 September.',s:'ISW',u:'https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/'},
+ {lane:'ai',d:'6 Oct 2026',h:'AI tools used in hacks on South Korean banks, president says',b:'Lee Jae Myung said signs of AI use have emerged in attacks on banks. Shinhan, KB Kookmin, Hana, BNK Busan, two savings banks and Hyundai Capital have reported leaks. About 66,000 people and 2,200 corporate records. Investigators point to Artex, an open-source AI vulnerability tool. The Shinhan breach came through a loan-broker portal, not the core payment network. No funds stolen.',s:'Reuters / Financial Times',u:'https://www.reuters.com/world/south-koreas-lee-says-ai-appears-have-been-used-bank-hacks-2026-10-06/'},
+ {lane:'ai',d:'2 Oct 2026',h:'Japanese banks finding twice the vulnerabilities after Mythos',b:'Nikkei reported that vulnerability finds at major Japanese banks have roughly doubled since Anthropic released Claude Mythos. Lenders are being told to plan for suspending services. Palo Alto said the model found 75 flaws in a month across its own products and produced a working exploit more than 70% of the time.',s:'Nikkei Asia',u:'https://asia.nikkei.com/spotlight/cybersecurity/japan-banks-uncover-twice-the-vulnerabilities-following-mythos-ai-release'},
+ {lane:'fraud',d:'25 Sep 2026',h:'Intesa’s Fideuram lost €95 million to an AI voice clone',b:'Then-chairman Paolo Molesini received a WhatsApp message that looked like it came from chief executive Carlo Messina, then a call using an AI clone of a senior lawyer. Transfers went mainly to China and Hong Kong. About €53 million was recovered. About €36 million is still missing, routed into crypto. First reported by Corriere della Sera. The bank declined to comment.',s:'Reuters',u:'https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/'},
+ {lane:'fraud',d:'14 Sep 2026',h:'Revolut handed customer files to attackers posing as a government agency',b:'The fintech said it shared personal and financial data, including passports, with a party impersonating an Italian government agency. SecurityWeek put the contact at about five months, 680 high-profile accounts and a $3 million ransom demand.',s:'BleepingComputer',u:'https://www.bleepingcomputer.com/tag/banking/'}
+];
 <script>
 /* ============ CORE HELPERS ============ */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -1533,7 +1575,8 @@ function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" d
 function renderFront(){const c=C(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
- $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
+ const wires=WIRES.slice(0,4).map(w=>`<article class="wire"><div class="dt">${esc(w.d)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">${esc(w.s)} ↗</a></article>`).join('');
+ $('#main').innerHTML=jurBar()+renderExec()+`<div class="sh" style="margin-top:22px"><h2>From the wires</h2><span class="sub">News media · geopolitics, AI attacks, deepfake fraud</span><button class="more" data-act="view" data-v="geo">Geopolitics ${ic('arrow',13,2)}</button></div><div class="wires">${wires}</div><div class="sh" style="margin-top:30px"><h2>On the desk</h2><span class="sub">Ranked by criticality for ${esc(c.short)} · ${pool.length} in scope · official sources only</span><button class="more" data-act="view" data-v="desk">Open the Desk ${ic('arrow',13,2)}</button></div>
  <section class="lead story" data-id="${L.id}"><div>${kicker(L)}<h2 class="hl" data-act="read" data-id="${L.id}">${esc(L.h)}</h2><p class="brief">${esc(L.brief)}</p>${srcLine(L)}
   <div class="leadmeta" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">${critChip(L)}${adjLine(L)||reasonLine(L)}${relvTag(L)}${curBtns(L)}${inBrief(L)}</div>
   <div style="margin-top:16px"><button class="pbtn" data-act="read" data-id="${L.id}">Extraction &amp; citations ${ic('arrow',14,2)}</button></div></div>
@@ -1757,7 +1800,17 @@ function watchlist(){const c=C();$('#modal').innerHTML=`<div style="display:flex
  <p class="reason" style="margin-top:12px">Configured per client by ${CONSULTANCY}. External public sources only; no internal bank data.</p>`;$('#modal').classList.add('on');$('#scrim').classList.add('on')}
 
 /* ---------- render & actions ---------- */
-function renderMain(){({front:renderFront,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
+
+function wireCard(w){return `<article class="wire"><div class="dt">${esc(w.d)}<br>${esc(w.s)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">Source ↗</a></article>`}
+function renderGeo(){const wars=SITUATIONS.map(s=>`<article><div class="asof">${esc(s.asof)}</div><h2>${esc(s.n)}</h2><p>${esc(s.sum)}</p><p>${esc(s.now)}</p><div class="cap">${esc(s.src)}</div></article>`).join('');
+ $('#main').innerHTML=`<div class="sechead"><div><h1>Geopolitics</h1><p>Wars and elections as reported in the news, with a situation brief so a single headline has context. Not a supervisory publication.</p></div><div class="stat"><b>2</b> wars<br>in the brief</div></div>
+ <div class="sit">${wars}</div>
+ <div class="sh"><h2>Elections</h2><span class="sub">Country votes that can move sanctions, energy policy and bank funding</span></div>
+ <div class="wires">${ELECT.map(e=>`<article class="wire"><div class="dt">${esc(e.d)}</div><div><h3>${esc(e.n)}</h3><p>${esc(e.t)}</p></div></article>`).join('')}</div>
+ <div class="sh"><h2>From the wires</h2></div><div class="wires">${WIRES.filter(w=>w.lane==='geo').map(wireCard).join('')}</div>`}
+function renderAi(){$('#main').innerHTML=`<div class="sechead"><div><h1>AI incidents at banks</h1><p>News of attacks and tools hitting banks. Mythos is the capability shift. Korea is the live campaign.</p></div><div class="stat"><b>${WIRES.filter(w=>w.lane==='ai').length}</b> stories</div></div><div class="wires">${WIRES.filter(w=>w.lane==='ai').map(wireCard).join('')}</div>`}
+function renderFraud(){$('#main').innerHTML=`<div class="sechead"><div><h1>Fraud at banks</h1><p>Major losses, with deepfakes called out. These are news reports of money or files leaving a bank, not supervisory speeches.</p></div><div class="stat"><b>€95m</b> Fideuram<br>still partly missing</div></div><div class="wires">${WIRES.filter(w=>w.lane==='fraud').map(wireCard).join('')}</div>`}
+function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,fraud:renderFraud,themes:renderThemes,desk:renderDesk,calendar:renderCalendar,map:renderMap,priorities:renderPriorities})[S.view]()}
 function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};
