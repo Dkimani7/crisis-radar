@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Crisis Radar</title>
@@ -1085,6 +1086,11 @@ button.prc:hover{filter:brightness(1.15)}
 .hot span{display:none;position:absolute;left:20px;top:-8px;width:220px;background:#fff;border:1px solid var(--rule);padding:8px 10px;z-index:2}
 .hot:hover span,.hot:focus span{display:block}
 @media(max-width:800px){.geoplay{grid-template-columns:1fr}.erail{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:12px}}
+
+.ticker{display:none}
+.tag{white-space:normal;overflow:visible;text-overflow:clip}
+.title .tag{font-size:13px;line-height:1.35}
+#main{min-height:40vh}
 </style>
 </head>
 <body>
@@ -1657,11 +1663,11 @@ function renderExec(){const d=envData(),ed=S.execEdit,c=client();
 function renderChrome(){const c=client();document.documentElement.style.setProperty('--accent',c.accent);document.documentElement.style.setProperty('--accent-deep',c.deep);
  $('#cLogo').textContent=c.logo;$('#cName').textContent=c.name;$('#cType').textContent='· '+c.type;$('#footClient').textContent=c.name;
  $('#utilDate').textContent=dateLong(EDITION);
- $('#liveLbl').innerHTML=`v0 mockup · crisis desk · stress, resolution, systemic risk`;
+ $('#liveLbl').innerHTML=`Crisis brief · wars, elections, AI and fraud`;
  $('#footDisc').textContent=`Pitch mockup · official public sources only · not affiliated with or endorsed by ${c.name}`;
  const sc=scope().filter(i=>!isOut(i.id)),cr=[0,1].map(l=>sc.filter(i=>critOf(i)===l).length);
  const r=radar();
- $('#tagline').innerHTML=`Crisis watch for <b>${esc(c.name)}</b> · Resolution, stress, CMDI and systemic risk`;
+ $('#tagline').innerHTML=`Crisis watch · wars, elections, AI and fraud`;
  $('#earL').innerHTML=`<div class="lab">Monday edition</div><b>${dateLong(EDITION)}</b><br>Live titles as of <span class="num">${hm(EDITION)}</span> CEST · ${scope().length} on this radar`;
  $('#earR').innerHTML=`<div class="lab">Curated by</div><b>${CONSULTANCY}</b><br>${sc.length} in scope · <span style="color:var(--c0);font-weight:600">${cr[0]} critical</span> · ${cr[1]} high`;
  const tk=datedItems().filter(d=>daysTo(d.iso)>=-3).slice(0,8);
@@ -1945,7 +1951,7 @@ function renderMap(){
   `<div class="hots">${HOTS.map(h=>`<button class="hot" style="left:${h.x}%;top:${h.y}%" title="${esc(h.n)}"><span><b>${esc(h.n)}</b><br><span class="tag">${esc(h.t)}</span><br>${esc(h.d)}</span></button>`).join('')}</div>`;
 }
 function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,map:renderMap})[S.view]||renderFront()}
-function renderAll(){renderChrome();renderMain();if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
+function renderAll(){renderChrome();try{renderMain()}catch(e){const m=document.querySelector('#main'); if(m) m.innerHTML='<div class="empty">'+esc(e.message)+'</div>'}if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};
 function toggleInc(id){const s=st(id);if(s.inc==='in'){setSt(id,{inc:null});E().order=E().order.filter(x=>x!==id);toast('Removed from brief')}else{setSt(id,{inc:'in'});if(!E().order.includes(id))E().order.push(id);toast('Included in Monday’s brief')}save();$('#briefBtn').classList.remove('bump');void $('#briefBtn').offsetWidth;$('#briefBtn').classList.add('bump');renderAll()}
