@@ -381,10 +381,13 @@ function renderGeo(){
    <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.geo)}</div></div>${voteRail()}</div>`;
 }
 function renderAi(){
- $('#main').innerHTML=execSum('', 'One disclosed bank cash loss: Fideuram sent €95 million after a fake WhatsApp and an AI-cloned voice. About €36 million is still missing. Korean banks lost records, not funds. Mythos is the capability shift, not a booked loss.')+
-  `<ul class="pts big">${AIBLOCK.bullets.map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>
-   <div class="angle"><b>Supervisory angle. </b>${esc(SUPER.ai)}</div>
-   <p class="cap" style="margin-top:10px">Sources: Reuters, 25 Sep 2026; Financial Times and Korea Herald, 6 Oct 2026; Nikkei Asia, 2 Oct 2026.</p>`;
+ const block=typeof AIBLOCK==='undefined'?{h:'AI, model risk and fraud',sum:'',bullets:[]}:AIBLOCK;
+ const angle=typeof SUPER==='undefined'?'':SUPER.ai;
+ $('#main').innerHTML=`<div class="sechead"><div><h1>${esc(block.h||'AI and fraud')}</h1><p>One block. Cash loss, data loss, and the model that finds the hole.</p></div></div>`+
+  execSum('', 'One disclosed bank cash loss: Fideuram sent €95 million after a fake WhatsApp and an AI-cloned voice. About €36 million is still missing. Korean banks lost records, not funds. Mythos is the capability shift, not a booked loss.')+
+  `<ul class="pts big">${(block.bullets||[]).map(b=>`<li><b>${esc(b.t)}.</b> ${esc(b.d)}</li>`).join('')}</ul>`+
+  (angle?`<div class="angle"><b>Supervisory angle. </b>${esc(angle)}</div>`:'')+
+  `<p class="cap" style="margin-top:10px">Sources: Reuters, 25 Sep 2026; Financial Times and Korea Herald, 6 Oct 2026; Nikkei Asia, 2 Oct 2026.</p>`;
 }
 function renderMap(){
  $('#main').innerHTML=execSum('', 'Five incident hotspots. Hover a point for the event. This is not a jurisdiction map.')+
@@ -447,7 +450,7 @@ $('#wlBtn').addEventListener('click',watchlist);
 $('#briefBtn').addEventListener('click',openTray);
 $('#scrim').addEventListener('click',()=>{closeReader();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');$('#scrim').classList.remove('on')});
 $('#resetBtn').addEventListener('click',()=>{S.ed[S.client]=null;delete S.ed[S.client];S.cc=null;save();renderAll();toast('Edition reset')});
-$$('#sections button').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.v);history.replaceState(null,'','#'+b.dataset.v)}));
+$$('#sections button').forEach(b=>b.addEventListener('click',()=>{try{setView(b.dataset.v)}catch(e){const m=document.querySelector('#main'); if(m) m.innerHTML='<div class="empty">'+esc(e.message)+'</div>'}; try{history.replaceState(null,'','#'+b.dataset.v)}catch(e){}}));
  if(location.hash){const v=location.hash.slice(1);if(['front','geo','ai','map'].includes(v))S.view=v}
 $$('[data-i]').forEach(el=>el.innerHTML=ic(el.dataset.i,14,2));
 try{renderAll();window.__ready=true}catch(err){console.error(err);const m=document.querySelector('#main');if(m)m.innerHTML='<div class="empty">This edition failed to render. '+esc(err.message)+'</div>';window.__ready=false}
