@@ -1,7 +1,7 @@
 <script>
 /* ============ CORE HELPERS ============ */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const BYID=Object.fromEntries(INC.map(i=>[i.id,i]));
+const BYID=Object.fromEntries(INC.filter(Boolean).map(i=>[i.id,i]));
 const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const EDITION=new Date(SNAP);
 const dateLong=d=>`${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
@@ -18,7 +18,7 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 
 /* ============ STATE ============ */
 const KEY='supervisoryRadar.ssmV0';let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
-const S={client:CLIENTS[saved.client]?saved.client:'santander',ed:saved.ed||{},view:'front',jur:'ea',cc:null,reader:null,ctx:[],pop:null,execEdit:false,
+var S={client:CLIENTS[saved.client]?saved.client:'santander',ed:saved.ed||{},view:'front',jur:'ea',cc:null,reader:null,ctx:[],pop:null,execEdit:false,
  fl:{crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false}};
 function client(){return CLIENTS[S.client]}
 const E=()=>S.ed[S.client]||(S.ed[S.client]={st:{},order:[],cover:'',prep:'Head of Supervisory Affairs',env:{},x:{}});

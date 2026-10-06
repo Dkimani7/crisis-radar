@@ -158,7 +158,7 @@ const INC=[
  themes:['capital'],emerg:['geo'],x:1,act:0,sev:2,rel:40,due:null,eff:null,
  sd:{narr:'NCA relays the SSM exercise.'},
  url:'https://www.banque-france.fr/en/press-release/ecb-publishes-results-2026-geopolitical-risk-reverse-stress-test',check:'verified HTTP 200'},
-/* ---- Global previews (outside v1 scope; shown only when a non-SSM jurisdiction is selected) ---- */,
+/* Global previews, outside v1 scope */
 {id:'G02',b:'fed',j:'us',type:'stress',date:'2026-06-24',preview:1,
  h:'Federal Reserve 2026 stress test results',
  brief:'32 banks could absorb about $708bn in losses under the severely adverse scenario. Aggregate CET1 falls to 11.2% before recovering to 12.7%.',
