@@ -20,21 +20,21 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const KEY='supervisoryRadar.ssmV0';let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
 const S={client:CLIENTS[saved.client]?saved.client:'santander',ed:saved.ed||{},view:'front',jur:'ea',cc:null,reader:null,ctx:[],pop:null,execEdit:false,
  fl:{crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false}};
-const C=()=>CLIENTS[S.client];
+function client(){return CLIENTS[S.client]}
 const E=()=>S.ed[S.client]||(S.ed[S.client]={st:{},order:[],cover:'',prep:'Head of Supervisory Affairs',env:{},x:{}});
 const EV=()=>E().env||(E().env={}),X=()=>E().x||(E().x={});
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({client:S.client,ed:S.ed}))}catch(e){}};
 const st=id=>E().st[id]||{};
 
 /* ============ SCOPE & SCORING ============ */
-const R=()=>({n:'Crisis Radar',short:'Crisis',kicker:'Crisis watch',tag:'Resolution, stress, CMDI and systemic risk',prio:'Stress & resolution',brief:"Monday’s Crisis Brief",foot:'Official crisis, resolution and systemic-risk publications'});
+function radar(){return ({n:'Crisis Radar',short:'Crisis',kicker:'Crisis watch',tag:'Resolution, stress, CMDI and systemic risk',prio:'Stress & resolution',brief:"Monday’s Crisis Brief",foot:'Official crisis, resolution and systemic-risk publications'});
 const inLane=i=>true;
 const inJur=i=>S.jur==='global'?true:i.j===S.jur;            /* Global = universe view (v1 content + previews) */
 const inCC=i=>!S.cc||i.cc===S.cc||(!i.cc&&i.j==='ea');      /* EA-wide items apply to every euro-area country */
 const scopeAll=()=>INC.filter(i=>inJur(i)&&inLane(i));
 const scope=()=>scopeAll().filter(inCC);
 function autoAssess(i){
- const c=C(),r=[];let R=i.rel;
+ const c=client(),r=[];let R=i.rel;
  if(i.j!=='ea'){R-=25;r.push('Outside v1 scope (preview)')}
  if(i.cc&&!c.presence.includes(i.cc))R-=20;
  if(i.cc&&c.core.includes(i.cc)){R+=6;r.push(EA_BY[i.cc].n+' · core market')}

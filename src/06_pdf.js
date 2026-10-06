@@ -13,7 +13,7 @@ const hexRgb=h=>{h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h
 const mix=(h,a)=>hexRgb(h).map(v=>Math.round(255-(255-v)*a));
 async function exportPdf(){const btn=$('#pdfBtn');const lab=btn?btn.innerHTML:'';if(btn){btn.disabled=true;btn.innerHTML='Preparing PDF…'}
  try{if(!window.jspdf)throw new Error('jsPDF not loaded');let fonts=null;try{fonts=await loadFonts()}catch(e){console.warn('Embedded fonts unavailable, using core fonts',e)}
-  const doc=buildPdf(fonts);const c=C(),d=new Date();const fn=`Monday-Crisis-Radar_SSM_${c.short.replace(/\s+/g,'-')}_${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}.pdf`;
+  const doc=buildPdf(fonts);const c=client(),d=new Date();const fn=`Monday-Crisis-Radar_SSM_${c.short.replace(/\s+/g,'-')}_${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}.pdf`;
   window.__lastPdf=doc.output('datauristring');doc.save(fn);toast(`PDF downloaded · ${fn}`)}
  catch(e){console.warn('PDF export failed, opening print view',e);toast('PDF library unavailable — opening print view');printEdition()}
  finally{if(btn){btn.disabled=false;btn.innerHTML=lab}}}
@@ -22,7 +22,7 @@ function buildPdf(fonts){
  const F={serif:'times',serifD:'times',sans:'helvetica'};
  if(fonts){Object.entries(FONT_SRC).forEach(([k,v])=>{doc.addFileToVFS(k+'.ttf',fonts[k]);doc.addFont(k+'.ttf',v[0],v[1])});F.serif='Serif';F.serifD='SerifD';F.sans='Sans'}
  const clean=s=>{s=String(s??'');s=s.replace(/→/g,'to').replace(/[▲▶▼◆]/g,'');if(fonts)return s.replace(/[^\x00-\u024F\u2010-\u2027\u20AC]/g,'');return s.replace(/[’‘]/g,"'").replace(/[“”]/g,'"').replace(/—|–/g,'-').replace(/·/g,'-').replace(/…/g,'...').replace(/€/g,'EUR ').replace(/č/g,'c').replace(/[^\x00-\xFF]/g,'')};
- const c=C(),e=E(),acc=hexRgb(c.accent),INK=[26,26,26],META=[110,106,99],NAVY=hexRgb('#1F3A5F'),CR=['#A30016','#C2410C','#9A6A00','#7d7d7d'].map(hexRgb),LVR=LVC.map(hexRgb);
+ const c=client(),e=E(),acc=hexRgb(c.accent),INK=[26,26,26],META=[110,106,99],NAVY=hexRgb('#1F3A5F'),CR=['#A30016','#C2410C','#9A6A00','#7d7d7d'].map(hexRgb),LVR=LVC.map(hexRgb);
  const W=210,H=297,M=16,CW=W-2*M,BOT=H-17,PT=0.3528;
  const font=(f,st,sz,col=INK)=>{doc.setFont(F[f],fonts||st!=='italic'||f!=='sans'?st:'normal');doc.setFontSize(sz);doc.setTextColor(...col)};
  const lh=(sz,k=1.32)=>sz*PT*k;
@@ -193,7 +193,7 @@ function buildPdf(fonts){
   doc.text(clean(`Official public sources only · v0 mockup, illustrative index · Pitch by ${CONSULTANCY}, not affiliated with ${c.name}`),M,H-11,{baseline:'top'});doc.text(`Page ${p} of ${np}`,W-M,H-11,{baseline:'top',align:'right'})}
  doc.setProperties({title:`Monday’s Crisis Brief — SSM / Euro area edition · ${c.name}`,author:e.prep||'Supervisory Affairs',creator:`Crisis Radar · ${CONSULTANCY}`,subject:'Monday’s Crisis Brief'});
  return doc}
-function printEdition(){const c=C(),e=E(),l=finalOrder(),ev=envData();
+function printEdition(){const c=client(),e=E(),l=finalOrder(),ev=envData();
  $('#print-root').innerHTML=`<div class="pe"><div class="mh"><small>Weekly brief · Prepared for ${esc(c.name)} · Curated by ${CONSULTANCY}</small><h1>Monday Supervisory Radar</h1><em>SSM / Euro area edition</em></div>
  <div class="dl2"><b>${dateLong(EDITION)}</b><span>${l.length} publications</span><b>Prepared by: ${esc(e.prep)}</b></div><h2>${esc(ev.h)}</h2><p class="cn">${esc(ev.s)}</p>${e.cover?`<p class="cn">${esc(e.cover)}</p>`:''}
  <div class="cols">${l.map((i,k)=>`<div class="st"><div class="k" style="color:${c.accent}">${k+1} · ${CRIT[critOf(i)]} · ${esc(BODY[i.b].s)} · ${esc(PTYPE[i.type])}</div><h2>${esc(i.h)}</h2><div class="mt">${esc(pubLab(i))}${i.due?' · reply '+esc(dShort(i.due)):''}</div><p>${esc(i.sum)}</p><p><b>Why it matters for ${esc(c.name)}:</b> ${esc(i.why)}</p>${st(i.id).note?`<p><i>Editor’s note: ${esc(st(i.id).note)}</i></p>`:''}<div class="mt">Source: ${esc(i.url)}</div></div>`).join('')}</div>

@@ -44,7 +44,7 @@ function prBar(){const f=S.fl.prio,b=(v,l,cls='')=>`<button class="${f===v?'on':
  return `<div class="prbar"><span class="jl">SSM priority</span>${b('all','All')}${PRIOS.map(P=>b(P.id,P.p,P.id)+P.vs.map(v=>b(v.id,v.code+' '+esc(v.short),P.id+' sub')).join('')).join('')}${b('none','Cross-cutting')}</div>`}
 /* ---------- environment & attention ---------- */
 const ARW={up:'▲',flat:'▶',next:'◆'};
-function envAuto(){const c=C(),pool=scope().filter(i=>!isOut(i.id)).sort(rank),th=themesRanked(pool),ri=th.filter(t=>t.trend==='rising'&&t.score>0);
+function envAuto(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank),th=themesRanked(pool),ri=th.filter(t=>t.trend==='rising'&&t.score>0);
  const c0=pool.filter(i=>critOf(i)===0).length,c1=pool.filter(i=>critOf(i)===1).length,lvl=c0>=2?3:c0>=1||c1>=4?2:c1>=1?1:0;
  const jn=JURS.find(x=>x.id===S.jur).n;
  if(!pool.length)return {h:'No publications in scope for this jurisdiction',s:'Select Euro area (SSM) to see v1 content.',sig:[],lvl,pool,th,ri,c0,c1,tk:[]};
@@ -75,7 +75,7 @@ function envInner(ed,cover){const d=envData(),ce=k=>ed?`contenteditable="true" d
 function flowBar(){const sc=scope(),f=finalOrder(),adj=sc.filter(i=>critEd(i)||relvEd(i)||isOut(i.id)).length;
  const steps=[['Detect',`${INC.length} official publications · ${new Set(INC.map(i=>i.b)).size} authorities`,'desk'],['Filter',`${sc.filter(i=>!isOut(i.id)).length} in ${S.jur==='ea'?'SSM / euro-area':'selected'} scope`,'desk'],['Judge',`${adj} adjusted by the manager`,'desk'],['Brief',`${f.length} in Monday’s brief`,'brief'],['Record',`schema v0 · ${INC.filter(i=>i.j==='ea').length} extractions with citations`,'record']];
  return `<div class="flow"><span class="fl0">How this edition was made</span>${steps.map((s,k)=>`<button class="fs" data-act="flow" data-v="${s[2]}"><span class="fn">${k+1}</span><span><b>${s[0]}</b><small>${esc(s[1])}</small></span></button>`).join('<span class="fa">→</span>')}</div>`}
-function renderExec(){const d=envData(),ed=S.execEdit,c=C();
+function renderExec(){const d=envData(),ed=S.execEdit,c=client();
  const watch=d.th.filter(t=>t.score>0).slice(0,3),dd=datedItems().filter(x=>daysTo(x.iso)>=0).slice(0,5);
  return `<section class="exec cover"><div class="xl">The supervisory environment · ${dateLong(EDITION)} · ${esc(JURS.find(x=>x.id===S.jur).n)}${S.cc?' · '+esc(EA_BY[S.cc].n):''}${d.edited?'<span class="edtag">Edited by editor</span>':''}
   ${ed&&d.edited?`<button class="linkbtn" data-act="xreset" style="margin-left:auto">Reset to automatic</button>`:''}<button class="xbtn ${ed?'on':''}" data-act="xedit" ${ed&&d.edited?'style="margin-left:10px"':''}>${ic(ed?'check':'pen',13,2)}${ed?'Done':'Edit'}</button></div>
@@ -100,13 +100,13 @@ function renderExec(){const d=envData(),ed=S.execEdit,c=C();
  ${flowBar()}</section>`}
 
 /* ---------- chrome ---------- */
-function renderChrome(){const c=C();document.documentElement.style.setProperty('--accent',c.accent);document.documentElement.style.setProperty('--accent-deep',c.deep);
+function renderChrome(){const c=client();document.documentElement.style.setProperty('--accent',c.accent);document.documentElement.style.setProperty('--accent-deep',c.deep);
  $('#cLogo').textContent=c.logo;$('#cName').textContent=c.name;$('#cType').textContent='· '+c.type;$('#footClient').textContent=c.name;
  $('#utilDate').textContent=dateLong(EDITION);
  $('#liveLbl').innerHTML=`v0 mockup · crisis desk · stress, resolution, systemic risk`;
  $('#footDisc').textContent=`Pitch mockup · official public sources only · not affiliated with or endorsed by ${c.name}`;
  const sc=scope().filter(i=>!isOut(i.id)),cr=[0,1].map(l=>sc.filter(i=>critOf(i)===l).length);
- const r=R();
+ const r=radar();
  $('#tagline').innerHTML=`Crisis watch for <b>${esc(c.name)}</b> · Resolution, stress, CMDI and systemic risk`;
  $('#earL').innerHTML=`<div class="lab">Monday edition</div><b>${dateLong(EDITION)}</b><br>Live titles as of <span class="num">${hm(EDITION)}</span> CEST · ${scope().length} on this radar`;
  $('#earR').innerHTML=`<div class="lab">Curated by</div><b>${CONSULTANCY}</b><br>${sc.length} in scope · <span style="color:var(--c0);font-weight:600">${cr[0]} critical</span> · ${cr[1]} high`;
@@ -119,7 +119,7 @@ function renderNavCount(){$('#briefN').textContent=finalOrder().length}
 
 /* ---------- FRONT ---------- */
 function storySecond(i){return `<article class="story ${isOut(i.id)?'out':''}" data-id="${i.id}"><div class="sbody">${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p>${srcLine(i)}</div><div class="sfoot">${critChip(i)}${relvTag(i)}<span style="margin-left:auto;display:flex;gap:6px;align-items:center">${inBrief(i)}${curBtns(i)}</span></div></article>`}
-function renderFront(){const c=C(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
+function renderFront(){const c=client(),pool=scope().filter(i=>!isOut(i.id)).sort(rank);S.ctx=pool.map(i=>i.id);
  const L=pool[0];if(!L){$('#main').innerHTML=jurBar()+renderExec()+'<div class="sh"><h2>From the wires</h2></div><div class="wires">'+(WIRES||[]).slice(0,4).map(w=>wireCard(w)).join('')+'</div><div class="empty">No publications in scope.</div>';return}
  const ex=L.sd||{};
  const wires=WIRES.slice(0,4).map(w=>`<article class="wire"><div class="dt">${esc(w.d)}</div><div><h3>${esc(w.h)}</h3><p>${esc(w.b)}</p></div><a href="${esc(w.u)}" target="_blank" rel="noopener">${esc(w.s)} ↗</a></article>`).join('');
@@ -134,7 +134,7 @@ function renderFront(){const c=C(),pool=scope().filter(i=>!isOut(i.id)).sort(ran
  ${pool.length>4?`<div class="sh"><h2>More from the Desk</h2><button class="more" data-act="view" data-v="desk">All publications ${ic('arrow',13,2)}</button></div><div class="more2">${pool.slice(4,10).map(i=>`<article class="story" data-id="${i.id}">${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p><div style="display:flex;gap:8px;align-items:center;margin-top:8px">${critChip(i)}${dueChip(i)}<span style="margin-left:auto">${curBtns(i)}</span></div></article>`).join('')}</div>`:''}`}
 
 /* ---------- THEMES ---------- */
-function renderThemes(){const c=C(),f=S.fl.prio,pool=scope().filter(i=>prFilterOk(i,f)),tOk=t=>f==='all'?true:f==='none'?!themePr(t.id).length:themePr(t.id).some(v=>f.length===2?v.startsWith(f):v===f);
+function renderThemes(){const c=client(),f=S.fl.prio,pool=scope().filter(i=>prFilterOk(i,f)),tOk=t=>f==='all'?true:f==='none'?!themePr(t.id).length:themePr(t.id).some(v=>f.length===2?v.startsWith(f):v===f);
  const th=themesRanked(pool).filter(tOk),act=th.filter(t=>t.score>0),idle=th.filter(t=>!t.score);S.ctx=[];
  const feeds=t=>themePr(t.id).length?themePr(t.id).map(v=>prChip(v)).join(''):'<span class="prc none">Cross-cutting</span>';
  const bodies=[...new Set(pool.map(i=>i.b))];
@@ -176,13 +176,13 @@ function row(i){return `<article class="row story ${isOut(i.id)?'out':''}" data-
  <div>${kicker(i)}<h3 class="hl" data-act="read" data-id="${i.id}">${esc(i.h)}</h3><p class="brief">${esc(i.brief)}</p>${srcLine(i)}
   <div class="prline">${prOf(i).length?`Feeds ${prOf(i).length>2?'<span class="prc all">All SSM priorities</span>':prOf(i).map(v=>prChip(v,true)).join('')}`:'<span class="prc none">Cross-cutting · not tied to a 2026–28 priority</span>'}</div><div class="sdrow">${SD.filter(([k])=>i.sd&&i.sd[k]).map(([k,n])=>`<span class="sdp k-${k}"><b>${n}</b> ${esc(i.sd[k])}</span>`).join('')}</div>${tagList(i)}</div>
  <div class="side">${critChip(i)}${adjLine(i)||reasonLine(i)}${relvTag(i)}<div style="display:flex;align-items:center;gap:6px">${curBtns(i)}${inBrief(i)}</div></div></article>`}
-function renderDesk(){const {l,base,outN}=sectionList(),c=C();S.ctx=l.map(i=>i.id);
+function renderDesk(){const {l,base,outN}=sectionList(),c=client();S.ctx=l.map(i=>i.id);
  $('#main').innerHTML=`<div class="sechead"><div><h1>Desk</h1><p>Every official publication in scope, with fixed-schema extraction and citations. Filter, judge criticality, mark not relevant, and include items in Monday’s brief.</p></div><div class="stat"><b>${base.length}</b> publications in scope<br>${new Set(base.map(i=>i.b)).size} authorities</div></div>
  ${jurBar()}<section class="env compact"><div class="xl">Supervisory environment · ${dateLong(EDITION)} <button class="linkbtn" data-act="view" data-v="front" style="margin-left:auto">Full cover →</button></div><h2 class="envh">${esc(envData().h)}</h2></section>${filterRow(base,outN)}
  ${l.length?l.map(row).join(''):`<div class="empty">${S.jur==='ea'?'No publications match these filters.':'No verified items for this jurisdiction yet: coming in v2.'}</div>`}`}
 
 /* ---------- CALENDAR ---------- */
-function renderCalendar(){const c=C(),pipe=PIPE.filter(p=>S.jur==='global'||p.j===S.jur),isE=S.jur==='ea'||S.jur==='global';
+function renderCalendar(){const c=client(),pipe=PIPE.filter(p=>S.jur==='global'||p.j===S.jur),isE=S.jur==='ea'||S.jur==='global';
  const dd=[...datedItems(),...(isE?fuDated().filter(f=>!(f.k==='next'&&datedItems().some(d=>d.i===f.i&&d.iso===f.iso))).map(f=>({i:f.i,iso:f.iso,k:`Follow-up · ${f.n}`,fu:f})):[])].sort((a,b)=>daysTo(a.iso)-daysTo(b.iso));S.ctx=dd.filter(d=>d.i).map(d=>d.i.id);
  const stg=[['cons','Consultation'],['reply','Reply deadline'],['fin','Final rule / decision'],['impl','Implementation / due']];
  const bucket=(a,b)=>dd.filter(d=>{const x=daysTo(d.iso);return x>=a&&x<=b});
@@ -203,7 +203,7 @@ function renderCalendar(){const c=C(),pipe=PIPE.filter(p=>S.jur==='global'||p.j=
 let WORLD=null,MAPP=null;
 async function loadWorld(){if(WORLD)return WORLD;try{const r=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');const t=await r.json();WORLD=topojson.feature(t,t.objects.countries)}catch(e){WORLD=null}return WORLD}
 function ccStats(cc){const pool=INC.filter(i=>i.j==='ea'&&!isOut(i.id));return {nat:pool.filter(i=>i.cc===cc),wide:pool.filter(i=>!i.cc)}}
-function renderMap(){const c=C();S.ctx=[];
+function renderMap(){const c=client();S.ctx=[];
  const isEA=S.jur==='ea'||S.jur==='global';
  const sel=S.cc?EA_BY[S.cc]:null,stt=S.cc?ccStats(S.cc):null;
  const list=S.cc?scope().filter(i=>!isOut(i.id)).sort((a,b)=>(b.cc===S.cc)-(a.cc===S.cc)||rank(a,b)):[];
@@ -225,7 +225,7 @@ function renderMap(){const c=C();S.ctx=[];
  <div class="jgrid">${JURS.map(j=>{const n=INC.filter(i=>i.j===j.id).length;return `<button class="jc ${j.v1?'v1':'off'} ${S.jur===j.id?'on':''}" data-act="jur" data-v="${j.id}"><b>${esc(j.n)}</b><span>${j.bodies.map(b=>BODY[b].s).join(' · ')}</span><em>${j.v1?`${n} publications · v1`:n?`${n} preview · v2`:'v2'}</em></button>`}).join('')}</div>`;
  if(isEA)drawMap()}
 async function drawMap(){const w=await loadWorld(),el=$('#eamap');if(!el)return;if(!w||!window.d3){el.innerHTML=`<div class="maperr">Map needs an internet connection (D3 + world-atlas via jsDelivr). Use the country list on the right.</div>`;return}
- el.innerHTML='';const W=el.clientWidth||760,H=560,c=C();
+ el.innerHTML='';const W=el.clientWidth||760,H=560,c=client();
  const feats=w.features.filter(f=>{const ll=d3.geoCentroid(f);return ll[0]>-25&&ll[0]<45&&ll[1]>30&&ll[1]<72||ISO_N[String(f.id).padStart(3,'0')]});
  const inEu=poly=>{const ll=d3.geoCentroid({type:'Polygon',coordinates:poly});return ll[0]>-11&&ll[0]<36&&ll[1]>34&&ll[1]<72};
  const trim=f=>f.geometry.type==='MultiPolygon'?{...f,geometry:{type:'MultiPolygon',coordinates:f.geometry.coordinates.filter(inEu)}}:f;
@@ -250,7 +250,7 @@ async function drawMap(){const w=await loadWorld(),el=$('#eamap');if(!el)return;
 /* ---------- PRIORITIES ---------- */
 function trailHtml(v){return `<div class="trail">${FU_STEPS.map(([k,n],j)=>{const st=v.fu[k],ss=fuSt(st);return `<div class="tstep s-${ss} ${st.ill?'ill':''}" style="--c:${FU_ST[ss][1]}"><div class="tsh"><span class="tn">${j+1}</span>${n}</div>${stPill(ss,k)}<p>${esc(st.t)}</p>
   <div class="tsf"><span class="num">${esc(fuDate(st))}</span>${st.iso&&daysTo(st.iso)>=0?`<span class="due ${daysTo(st.iso)<=31?'month':''}">${daysTo(st.iso)}d</span>`:''}${st.src?`<button class="linkbtn" data-act="read" data-id="${st.src}" title="${esc(BYID[st.src].h)}">[${st.src}] ${esc(BODY[BYID[st.src].b].s)}</button>`:''}${st.ill?'<span class="illt">illustrative</span>':''}</div></div>`}).join('<span class="tarr">→</span>')}</div>`}
-function renderPriorities(){const c=C(),pool=scope();S.ctx=prPubs(VULNS.map(v=>v.id),pool).sort(rank).map(i=>i.id);
+function renderPriorities(){const c=client(),pool=scope();S.ctx=prPubs(VULNS.map(v=>v.id),pool).sort(rank).map(i=>i.id);
  const nAct=PRIOS.reduce((a,p)=>a+p.vs.reduce((b,v)=>b+v.acts.length,0),0),cross=pool.filter(i=>!isOut(i.id)&&!prOf(i).length).sort(rank);
  const off=S.jur!=='ea'&&S.jur!=='global';
  $('#main').innerHTML=`<div class="sechead"><div><h1>Crisis agenda</h1><p>Crisis desk only: geopolitical stress, resolution and CMDI, deposit-guarantee funding, and the ESRB frontier-AI warning. Supervisory and regulatory items are not in this radar.</p></div><div class="stat"><b>2</b> priorities · ${VULNS.length} key concerns<br>${nAct} planned activities · <a href="${PRIO_URL}" target="_blank" rel="noopener" style="color:var(--accent)">official page ↗</a></div></div>
@@ -277,7 +277,7 @@ function renderPriorities(){const c=C(),pool=scope();S.ctx=prPubs(VULNS.map(v=>v
 /* ---------- READER ---------- */
 function openReader(id){S.reader=id;if(!S.ctx.includes(id))S.ctx=[id];closePop();$('#tray').classList.remove('on');$('#modal').classList.remove('on','wide');renderReader();$('#reader').classList.add('on');$('#scrim').classList.add('on');$('#reader .pbody').scrollTop=0}
 function closeReader(){S.reader=null;$('#reader').classList.remove('on');$('#scrim').classList.remove('on')}
-function renderReader(){const i=BYID[S.reader];if(!i)return;const a=A(i),k=S.ctx.indexOf(i.id),c=C();
+function renderReader(){const i=BYID[S.reader];if(!i)return;const a=A(i),k=S.ctx.indexOf(i.id),c=client();
  const seg=(arr,cur,auto,act,cls)=>`<div class="seg">${arr.map((n,l)=>`<button class="${cls(l)} ${l===cur?'on':''} ${l===auto?'auto':''}" data-act="${act}" data-id="${i.id}" data-v="${l}">${n}</button>`).join('')}</div>`;
  const schema=[['Issuing body',BODY[i.b].n],['Jurisdiction',JURS.find(x=>x.id===i.j).n+(i.cc?` · ${EA_BY[i.cc].n} (${EA_BY[i.cc].nca})`:' · euro area-wide')],['Document type',PTYPE[i.type]],['Publication date',pubLab(i)],
   ['SSM priority fed',prOf(i).map(v=>VBY[v].code+' '+VBY[v].v).join('; ')||'Cross-cutting (not tied to a 2026–28 priority)'],['Themes (fixed)',i.themes.map(t=>TH[t].n).join('; ')],['Emerging themes',(i.emerg||[]).map(e=>EMERGING.find(x=>x.id===e).n).join('; ')||'—'],['Explicitness',['','1 · mention','2 · supervisory expectation','3 · requirement / deadline'][i.x]],
@@ -317,9 +317,9 @@ function renderPop(){const i=BYID[S.pop];if(!i)return;const a=A(i);
 
 /* ---------- TRAY ---------- */
 function openTray(){closePop();S.reader=null;$('#reader').classList.remove('on');renderTray();$('#tray').classList.add('on');$('#scrim').classList.add('on')}
-function renderTray(){const f=finalOrder(),c=C(),e=E(),sc=scope();let n=0;const d=envData(),ev=EV();
+function renderTray(){const f=finalOrder(),c=client(),e=E(),sc=scope();let n=0;const d=envData(),ev=EV();
  const stats={rev:sc.length,inc:f.length,out:sc.filter(i=>isOut(i.id)).length,adj:sc.filter(i=>critEd(i)||relvEd(i)).length};
- $('#tray').innerHTML=`<div class="pbar"><span class="crumb">${esc(R().brief)} · ${esc(c.name)}</span><span class="sp"></span><button class="ibtn" data-act="close" title="Close (Esc)">${ic('x',18)}</button></div>
+ $('#tray').innerHTML=`<div class="pbar"><span class="crumb">${esc(radar().brief)} · ${esc(c.name)}</span><span class="sp"></span><button class="ibtn" data-act="close" title="Close (Esc)">${ic('x',18)}</button></div>
  <div class="pbody"><h2>Monday’s Brief</h2><div class="sub">${f.length} publication${f.length===1?'':'s'} selected · ordered by adjusted criticality, then your order · SSM / Euro area edition</div>
  <div class="tfields"><div class="tf"><label>Prepared by</label><input id="prepIn" value="${esc(e.prep)}"></div><div class="tf"><label>Cover note</label><textarea class="notefield" id="coverIn" placeholder="What senior management should take away this week…">${esc(e.cover)}</textarea></div></div>
  <div class="xsum"><h5><span>Cover · 30-second read</span>${d.edited?'<button class="linkbtn" data-act="xreset">Reset to automatic</button>':''}</h5>
@@ -336,11 +336,11 @@ function renderTray(){const f=finalOrder(),c=C(),e=E(),sc=scope();let n=0;const 
  $('#prepIn').addEventListener('input',e=>{E().prep=e.target.value;save()});$('#coverIn').addEventListener('input',e=>{E().cover=e.target.value;save()})}
 
 /* ---------- MODALS ---------- */
-function openRecord(){const c=C(),rows=[];scope().forEach(i=>{if(A(i).lvl<=1)rows.push({a:`Auto-classified ${CRIT[A(i).lvl]} (${A(i).reasons.slice(0,2).join(' + ')})`,i,by:'Crisis Radar v0'});if(critEd(i))rows.push({a:`Criticality adjusted ${CRIT[A(i).lvl]} → ${CRIT[critOf(i)]}`,i,by:E().prep});if(isIn(i.id))rows.push({a:'Included in Monday’s brief',i,by:E().prep});if(isOut(i.id))rows.push({a:'Marked not relevant',i,by:E().prep})});
+function openRecord(){const c=client(),rows=[];scope().forEach(i=>{if(A(i).lvl<=1)rows.push({a:`Auto-classified ${CRIT[A(i).lvl]} (${A(i).reasons.slice(0,2).join(' + ')})`,i,by:'Crisis Radar v0'});if(critEd(i))rows.push({a:`Criticality adjusted ${CRIT[A(i).lvl]} → ${CRIT[critOf(i)]}`,i,by:E().prep});if(isIn(i.id))rows.push({a:'Included in Monday’s brief',i,by:E().prep});if(isOut(i.id))rows.push({a:'Marked not relevant',i,by:E().prep})});
  $('#modal').innerHTML=`<div style="display:flex;align-items:center;gap:12px"><div><h3>Record · ${esc(c.name)}</h3><div class="reason">Extraction schema v0 and decisions for this edition: what was flagged, why and by whom</div></div><button class="ibtn" data-act="mclose" style="margin-left:auto">${ic('x',18)}</button></div>
  <table class="rtab2"><thead><tr><th>When</th><th>Action</th><th>Publication</th><th>By</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="num">${hm(EDITION)}</td><td>${esc(r.a)}</td><td><button class="linkbtn" data-act="read" data-id="${r.i.id}">${esc(BODY[r.i.b].s)} · ${esc(r.i.h.slice(0,70))}</button></td><td>${esc(r.by)}</td></tr>`).join('')}</tbody></table>`;
  $('#modal').classList.add('on','wide');$('#scrim').classList.add('on')}
-function watchlist(){const c=C();$('#modal').innerHTML=`<div style="display:flex;align-items:center;gap:12px"><span class="logo" style="width:40px;height:40px;font-size:14px;border-radius:8px">${c.logo}</span><div><h3>${esc(c.name)}</h3><div class="reason">${esc(c.type)}</div></div><button class="ibtn" data-act="mclose" style="margin-left:auto">${ic('x',18)}</button></div>
+function watchlist(){const c=client();$('#modal').innerHTML=`<div style="display:flex;align-items:center;gap:12px"><span class="logo" style="width:40px;height:40px;font-size:14px;border-radius:8px">${c.logo}</span><div><h3>${esc(c.name)}</h3><div class="reason">${esc(c.type)}</div></div><button class="ibtn" data-act="mclose" style="margin-left:auto">${ic('x',18)}</button></div>
  <div class="wl"><div><h4>v1 scope</h4><p>ECB Banking Supervision (SSM), ECB, EBA, ESRB, and euro-area NCAs (BdE and BdF in this sample). SRB and AMLA are in the universe and planned.</p></div>
  <div><h4>Euro-area presence (public, indicative)</h4><p>${c.presence.map(x=>EA_BY[x].n).join(', ')} · core: ${c.core.map(x=>EA_BY[x].n).join(', ')}</p></div>
  <div><h4>Coming in v2</h4><p>${JURS.filter(j=>!j.v1).map(j=>`${j.n}: ${j.bodies.map(b=>BODY[b].s).join(', ')}`).join(' · ')}</p></div></div>
@@ -392,7 +392,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');
   case 'xlvl':X().lvl=+t.dataset.v===envAuto().lvl?null:+t.dataset.v;if(X().lvl==null)delete X().lvl;save();renderMain();break;
   case 'xreset':E().env={};delete X().lvl;save();renderAll();break;
   case 'flow':if(t.dataset.v==='brief')openTray();else if(t.dataset.v==='record')openRecord();else setView(t.dataset.v);break;
-  case 'client':S.client=t.dataset.c;$('#clientMenu').classList.remove('on');save();renderAll();toast(`Switched to ${C().name}`);break;
+  case 'client':S.client=t.dataset.c;$('#clientMenu').classList.remove('on');save();renderAll();toast(`Switched to ${client().name}`);break;
   case 'mup':case 'mdown':{const f=finalOrder(),i=BYID[id],g=f.filter(x=>critOf(x)===critOf(i)),k=g.indexOf(i),j=a==='mup'?k-1:k+1;if(j<0||j>=g.length)break;const o=E().order,ia=o.indexOf(id),ib=o.indexOf(g[j].id);[o[ia],o[ib]]=[o[ib],o[ia]];save();renderTray();break}
   case 'pdf':exportPdf();break;
   case 'printview':printEdition();break;
