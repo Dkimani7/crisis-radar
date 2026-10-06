@@ -391,7 +391,7 @@ function renderMap(){
   `<div class="hots">${HOTS.map(h=>`<button class="hot" style="left:${h.x}%;top:${h.y}%" title="${esc(h.n)}"><span><b>${esc(h.n)}</b><br><span class="tag">${esc(h.t)}</span><br>${esc(h.d)}</span></button>`).join('')}</div>`;
 }
 function renderMain(){({front:renderFront,geo:renderGeo,ai:renderAi,map:renderMap})[S.view]||renderFront()}
-function renderAll(){renderChrome();try{renderMain()}catch(e){const m=document.querySelector('#main'); if(m) m.innerHTML='<div class="empty">'+esc(e.message)+'</div>'}if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
+function renderAll(){renderChrome();try{const keep=document.querySelector('#main').innerHTML;renderMain();const m=document.querySelector('#main'); if(m&&!m.textContent.trim()) m.innerHTML=keep}catch(e){const m=document.querySelector('#main'); if(m&&!m.textContent.trim()) m.innerHTML='<div class="empty">'+esc(e.message)+'</div>'}if(S.reader&&$('#reader').classList.contains('on'))renderReader();if($('#tray').classList.contains('on'))renderTray()}
 function setView(v){S.view=v;S.fl={crit:'all',grp:'all',body:'all',theme:'all',prio:'all',sort:'crit',showOut:false};$$('#sections button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));closePop();window.scrollTo({top:0});renderMain()}
 const setSt=(id,p)=>{E().st[id]={...st(id),...p};save()};
 function toggleInc(id){const s=st(id);if(s.inc==='in'){setSt(id,{inc:null});E().order=E().order.filter(x=>x!==id);toast('Removed from brief')}else{setSt(id,{inc:'in'});if(!E().order.includes(id))E().order.push(id);toast('Included in Monday’s brief')}save();$('#briefBtn').classList.remove('bump');void $('#briefBtn').offsetWidth;$('#briefBtn').classList.add('bump');renderAll()}
