@@ -1115,6 +1115,15 @@ button.prc:hover{filter:brightness(1.15)}
  .navr{order:2;margin:0 0 8px}
  .briefbtn{width:auto}
 }
+
+.mapgrid{display:grid;grid-template-columns:1fr;gap:16px}
+.hots{height:280px}
+.hot{width:auto;height:auto;border-radius:99px;padding:4px 8px;font:700 11px var(--sans);color:#fff}
+.ev{border-top:1px solid var(--rule);padding:14px 0}
+.ev.on{background:#fff;border:1px solid var(--rule);padding:14px}
+.ev h2{margin:6px 0;font:500 26px var(--serif)}
+.ev .src{font:600 13px/1.45 var(--sans);color:var(--ink2)}
+.ev .src a{color:var(--accent)}
 </style>
 </head>
 <body>
@@ -1140,14 +1149,53 @@ button.prc:hover{filter:brightness(1.15)}
 </div>
 
 <main class="wrap page" id="main"><section class="pane on" id="map">
-<section class="xsum"><h2>Executive summary</h2><p>Five incident hotspots. Hover a point for the event.</p></section>
-<div class="hots">
-<button class="hot" style="left:62%;top:42%"><span><b>Strait of Hormuz</b><br><span class="tag">War</span><br>Shipping strikes, 9 Sep. Brent settled at $101.</span></button>
-<button class="hot" style="left:58%;top:34%"><span><b>Ukraine</b><br><span class="tag">War</span><br>Stuck front. 173 drones on 25–26 Sep.</span></button>
-<button class="hot" style="left:84%;top:38%"><span><b>Seoul</b><br><span class="tag">AI intrusion</span><br>Seven firms. No funds stolen.</span></button>
-<button class="hot" style="left:52%;top:36%"><span><b>Milan</b><br><span class="tag">Deepfake fraud</span><br>Fideuram, €95 million. About €36 million missing.</span></button>
-<button class="hot" style="left:86%;top:40%"><span><b>Tokyo</b><br><span class="tag">Model risk</span><br>About twice the flaws since Mythos.</span></button>
+<section class="xsum"><h2>Executive summary</h2><p>Five places. Each one is the event, the risk it sits in, the supervisory reading of that risk, and the source. Tap a point or read the card. Hover is not required.</p></section>
+<div class="mapgrid">
+<div class="hots" id="hots">
+<button class="hot" data-ev="hormuz" style="left:62%;top:42%">Hormuz</button>
+<button class="hot" data-ev="ukraine" style="left:58%;top:34%">Ukraine</button>
+<button class="hot" data-ev="seoul" style="left:82%;top:38%">Seoul</button>
+<button class="hot" data-ev="milan" style="left:51%;top:36%">Milan</button>
+<button class="hot" data-ev="tokyo" style="left:84%;top:40%">Tokyo</button>
 </div>
+<div class="evlist">
+<article class="ev" id="hormuz"><div class="tag">War · Hormuz</div><h2>Strait of Hormuz</h2>
+<p><b>Event.</b> On 9 September Iran said it attacked 10 ships near Hormuz. The US sank five Iranian tankers. Brent settled at $101.21. On 6 October Chevron said physical crude landed in Asia is closer to $150 than the futures price near $100. The G7 agreed a 100 million barrel release.</p>
+<p><b>Overarching view.</b> Eighth month of the US–Iran war. This is an energy and shipping shock, not a one-day headline. About a fifth of traded oil went through Hormuz before the war. JPMorgan has no baseline for how it ends, with about 10 million barrels a day already disrupted.</p>
+<p><b>Supervisory angle.</b> The ECB’s 2026 reverse stress test is the supervisory reading of the same shock. Banks built their own geopolitical scenarios. In some, foreign-currency liquidity ratios fell below 100%.</p>
+<p class="src">News: <a href="https://www.reuters.com/business/energy/brent-crude-rises-above-100-barrel-middle-east-conflict-escalates-2026-09-09/">Reuters, 9 Sep 2026</a> · <a href="https://www.reuters.com/business/energy/oil-fuel-supply-buffers-are-thinning-as-middle-east-conflict-continues-chevron-2026-10-06/">Reuters, 6 Oct 2026</a><br>Supervisory: ECB Banking Supervision, 11 Sep 2026, reverse stress test results.</p></article>
+<article class="ev" id="ukraine"><div class="tag">War · Ukraine</div><h2>Eastern Ukraine</h2>
+<p><b>Event.</b> The Institute for the Study of War says Russian net gains since March are near zero. Ukrainian counterattacks continue toward Kupyansk, Oleksandrivka and Lyman. Russia launched 173 drones overnight on 25–26 September.</p>
+<p><b>Overarching view.</b> A stuck front and a winter strike campaign. The transmission is energy infrastructure, sanctions and cyber, not a map of villages. The US signed the Graham sanctions act on Russia and Iran on 18 September.</p>
+<p><b>Supervisory angle.</b> The same ECB reverse stress test covers a geopolitical scenario, not only Hormuz. The ESAs’ autumn note adds a second channel: reliance on non-EU ICT providers if the conflict widens into cyber and infrastructure.</p>
+<p class="src">News: <a href="https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/">Institute for the Study of War, 26 Sep 2026</a><br>Supervisory: ECB Banking Supervision, 11 Sep 2026. ESMA autumn note, 9 Sep 2026.</p></article>
+<article class="ev" id="seoul"><div class="tag">AI intrusion · Korea</div><h2>Seoul</h2>
+<p><b>Event.</b> From 28 September to 6 October, seven financial firms were entered through a loan-broker portal: Shinhan, KB Kookmin, Hana, BNK Busan, two savings banks and Hyundai Capital. About 66,000 people. Investigators point to Artex, an open-source AI tool. No funds stolen. The president said AI was used.</p>
+<p><b>Overarching view.</b> A data breach, not a booked cash loss. The door was a third-party broker portal, not the core ledger. The fraud risk is what happens next with the stolen records.</p>
+<p><b>Supervisory angle.</b> The ESAs’ autumn update groups capable AI models with cyber risk, and names dependence on external ICT providers as the amplifier. This incident is that pattern.</p>
+<p class="src">News: <a href="https://www.reuters.com/world/south-koreas-lee-says-ai-appears-have-been-used-bank-hacks-2026-10-06/">Reuters, 6 Oct 2026</a> · Financial Times, 6 Oct 2026<br>Supervisory: ESMA, 9 Sep 2026, autumn risk update.</p></article>
+<article class="ev" id="milan"><div class="tag">Deepfake fraud · Italy</div><h2>Milan</h2>
+<p><b>Event.</b> Fideuram, the private bank of Intesa Sanpaolo, sent €95 million after a WhatsApp that looked like it came from the group chief executive and a call that used an AI clone of a lawyer’s voice. About €53 million was recovered. About €36 million is still missing, converted to crypto. The then-chairman resigned. The bank declined to comment.</p>
+<p><b>Overarching view.</b> The only disclosed bank cash loss from AI this year. The control that failed was callback identity, not the firewall.</p>
+<p><b>Supervisory angle.</b> Same supervisory frame as Seoul: capable models used against a bank, here for impersonation rather than intrusion. No separate public enforcement notice yet. The source of the loss is Reuters, not a supervisor.</p>
+<p class="src">News: <a href="https://www.reuters.com/legal/government/ai-messaging-scam-costs-italys-top-bank-intesa-millions-sources-say-2026-09-25/">Reuters, 25 Sep 2026</a><br>Supervisory: none disclosed. ESAs autumn note, 9 Sep 2026, is the general frame, not a finding on Fideuram.</p></article>
+<article class="ev" id="tokyo"><div class="tag">Model risk · Japan</div><h2>Tokyo</h2>
+<p><b>Event.</b> Anthropic’s Claude Mythos, released to selected partners in April, is being used to find flaws. Nikkei on 2 October: Japanese banks are finding about twice as many vulnerabilities. Palo Alto found 75 in a month and a working exploit more than 70% of the time.</p>
+<p><b>Overarching view.</b> A capability shift, not a booked loss. The patch clock shortens from months to days.</p>
+<p><b>Supervisory angle.</b> The ESAs’ autumn update is the supervisory reading: capable AI models raise cyber risk, and external ICT dependence is the amplifier. No Japanese supervisor has published a loss figure.</p>
+<p class="src">News: <a href="https://asia.nikkei.com/spotlight/cybersecurity/japan-banks-uncover-twice-the-vulnerabilities-following-mythos-ai-release">Nikkei Asia, 2 Oct 2026</a><br>Supervisory: ESMA, 9 Sep 2026, autumn risk update.</p></article>
+</div>
+</div>
+<script>
+document.querySelectorAll('.hot').forEach(function(b){
+  b.addEventListener('click', function(){
+    var id=b.getAttribute('data-ev');
+    document.querySelectorAll('.ev').forEach(function(e){e.classList.toggle('on', e.id===id)});
+    var el=document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+</script>
 </section>
 </main></main>
 <script>
