@@ -1412,7 +1412,7 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({client:S.client,ed:
 const st=id=>E().st[id]||{};
 
 /* ============ SCOPE & SCORING ============ */
-function radar(){return ({n:'Crisis Radar',short:'Crisis',kicker:'Crisis watch',tag:'Resolution, stress, CMDI and systemic risk',prio:'Stress & resolution',brief:"Monday’s Crisis Brief",foot:'Official crisis, resolution and systemic-risk publications'});
+function radar(){return ({n:'Crisis Radar',short:'Crisis',kicker:'Crisis watch',tag:'Resolution, stress, CMDI and systemic risk',prio:'Stress & resolution',brief:"Monday’s Crisis Brief",foot:'Official crisis, resolution and systemic-risk publications'});}
 const inLane=i=>true;
 const inJur=i=>S.jur==='global'?true:i.j===S.jur;            /* Global = universe view (v1 content + previews) */
 const inCC=i=>!S.cc||i.cc===S.cc||(!i.cc&&i.j==='ea');      /* EA-wide items apply to every euro-area country */
