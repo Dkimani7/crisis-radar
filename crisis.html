@@ -1100,10 +1100,11 @@ button.prc:hover{filter:brightness(1.15)}
 .sections a{font:600 12.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);height:50px;display:flex;align-items:center;border-bottom:2px solid transparent;flex:0 0 auto}
 .sections a:hover,.sections a.on{color:var(--accent);border-bottom-color:var(--accent)}
 .pane{display:none}
-#front{display:block}
-#geo:target,#ai:target,#map:target{display:block}
-#geo:target ~ #front,#ai:target ~ #front,#map:target ~ #front{display:none}
-body:has(#geo:target) #front,body:has(#ai:target) #front,body:has(#map:target) #front{display:none}
+
+
+
+
+.pane{display:none}.pane.on{display:block}
 </style>
 </head>
 <body>
@@ -1124,7 +1125,7 @@ body:has(#geo:target) #front,body:has(#ai:target) #front,body:has(#map:target) #
 <nav class="nav" id="nav"><div class="wrap">
   <div class="mini" id="miniTitle">Crisis Radar</div>
   <div class="sections" id="sections">
-    <a href="#front" data-v="front">Front Page</a>
+    <a href="#front" data-v="front" class="on">Front Page</a>
     <a href="#geo" data-v="geo">Geopolitics</a>
     <a href="#ai" data-v="ai">AI & fraud</a>
     <a href="#map" data-v="map">Map</a>
@@ -1132,6 +1133,23 @@ body:has(#geo:target) #front,body:has(#ai:target) #front,body:has(#map:target) #
   <div class="navr"><button class="briefbtn" id="briefBtn"><span data-i="bookmark"></span>Monday’s Brief <span class="n num" id="briefN">0</span></button></div>
 </div></nav>
 </div>
+<script>
+function showPane(id){
+  var panes=document.querySelectorAll('.pane');
+  for(var i=0;i<panes.length;i++){panes[i].classList.remove('on');panes[i].style.display='none'}
+  var el=document.getElementById(id)||document.getElementById('front');
+  if(el){el.classList.add('on');el.style.display='block'}
+  var links=document.querySelectorAll('.sections a');
+  for(var j=0;j<links.length;j++) links[j].classList.toggle('on', links[j].getAttribute('data-v')===id);
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('.sections a');
+  if(!a) return;
+  e.preventDefault();
+  showPane(a.getAttribute('data-v'));
+});
+showPane('front');
+</script>
 <main class="wrap page" id="main">
 <section class="pane" id="front">
 <section class="xsum"><h2>Executive summary</h2><p>Two wars set the price of energy and the sanctions map. A short list of elections can move both. AI risk is one block: models that find exploits, and models that impersonate a person. The only disclosed bank cash loss is Fideuram, €95 million sent, about €36 million still missing.</p></section>

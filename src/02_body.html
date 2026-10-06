@@ -16,7 +16,7 @@
 <nav class="nav" id="nav"><div class="wrap">
   <div class="mini" id="miniTitle">Crisis Radar</div>
   <div class="sections" id="sections">
-    <a href="#front" data-v="front">Front Page</a>
+    <a href="#front" data-v="front" class="on">Front Page</a>
     <a href="#geo" data-v="geo">Geopolitics</a>
     <a href="#ai" data-v="ai">AI & fraud</a>
     <a href="#map" data-v="map">Map</a>
@@ -24,6 +24,23 @@
   <div class="navr"><button class="briefbtn" id="briefBtn"><span data-i="bookmark"></span>Monday’s Brief <span class="n num" id="briefN">0</span></button></div>
 </div></nav>
 </div>
+<script>
+function showPane(id){
+  var panes=document.querySelectorAll('.pane');
+  for(var i=0;i<panes.length;i++){panes[i].classList.remove('on');panes[i].style.display='none'}
+  var el=document.getElementById(id)||document.getElementById('front');
+  if(el){el.classList.add('on');el.style.display='block'}
+  var links=document.querySelectorAll('.sections a');
+  for(var j=0;j<links.length;j++) links[j].classList.toggle('on', links[j].getAttribute('data-v')===id);
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('.sections a');
+  if(!a) return;
+  e.preventDefault();
+  showPane(a.getAttribute('data-v'));
+});
+showPane('front');
+</script>
 <main class="wrap page" id="main">
 <section class="pane" id="front">
 <section class="xsum"><h2>Executive summary</h2><p>Two wars set the price of energy and the sanctions map. A short list of elections can move both. AI risk is one block: models that find exploits, and models that impersonate a person. The only disclosed bank cash loss is Fideuram, €95 million sent, about €36 million still missing.</p></section>
